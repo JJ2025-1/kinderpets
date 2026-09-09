@@ -16,11 +16,11 @@ export async function GET(request: NextRequest) {
     const shelterId = searchParams.get('shelterId') ? Number(searchParams.get('shelterId')) : undefined;
 
     if (forShelter) {
-      const pets = dbService.getAllPetsForShelter(shelterId);
+      const pets = await dbService.getAllPetsForShelter(shelterId);
       return NextResponse.json({ pets });
     }
 
-    const pets = dbService.getDiscoverPets({
+    const pets = await dbService.getDiscoverPets({
       adopterId,
       species,
       breed,
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const petId = dbService.addPet({
+    const petId = await dbService.addPet({
       shelter_id: Number(shelter_id),
       breed_name,
       pet_name,

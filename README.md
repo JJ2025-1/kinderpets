@@ -96,52 +96,61 @@ graph TD
 
 ---
 
-## 💾 SQL Implementation (`database/`)
+## 💾 Oracle SQL & PL/SQL Implementation (`database/`)
 
-The repository includes complete, production-grade SQL scripts in `database/`:
+The repository includes complete, production-grade Oracle SQL and PL/SQL scripts in `database/`:
 
-- **`01_schema.sql`**: Oracle DDL defining all 12 tables with `VARCHAR2`, `NUMBER`, `DATE`, `TIMESTAMP`, sequences/identities, foreign keys, and check constraints.
-- **`02_constraints.sql`**: Performance indexes on search keys (`status`, `breed_name`, `shelter_id`, `adopter_id`).
-- **`03_seed_data.sql`**: Realistic dataset covering 5 Shelters, 6 Staff, 10 Breeds, 16 Pets, 20 Photos, 6 Adopters, Preferences, Swipes, Matches, Applications, and Decisions.
-- **`04_queries.sql`**: 14 demonstration queries exercising:
+- **[`database/01_schema.sql`](file:///Users/jjeevan/kinderpets/database/01_schema.sql)**: Safely re-runnable DDL creating all 12 DA1 tables, primary keys, foreign keys, unique constraints, check constraints, identity sequences, and performance B-Tree indexes. (Physical table `PET_MATCH` represents the DA1 `MATCH` entity to avoid the Oracle reserved keyword).
+- **[`database/02_seed_data.sql`](file:///Users/jjeevan/kinderpets/database/02_seed_data.sql)**: Comprehensive realistic seed dataset covering 5 Indian Shelters (prominent Bangalore presence), 6 Staff, 10 Breeds, 16 Pets, 20 Photos, 6 Adopters, Preferences, Preferred Breeds, Swipes, Matches, Applications, and Decisions.
+- **[`database/03_queries.sql`](file:///Users/jjeevan/kinderpets/database/03_queries.sql)**: 18 academic demonstration queries exercising:
   1. All available pets
-  2. Available pets with 3-table join (pet, breed, shelter)
-  3. Filter pets by species
-  4. Filter pets by breed
-  5. Adopter preference matching using subqueries and range checks
-  6. Adopter swipe history
-  7. Matches for an adopter
-  8. Pending adoption applications
-  9. Caseworker assignments (LEFT OUTER JOIN)
-  10. Adopted pets audit trail (4-table join)
-  11. Shelter census (GROUP BY and conditional SUM)
-  12. Breed census (GROUP BY with HAVING)
-  13. Application status distribution percentages
-  14. Shelters with available pets using `EXISTS` subquery
+  2. Pets by city (Bangalore)
+  3. Pets by species (Dogs)
+  4. Pets by breed (Labrador Retriever)
+  5. Nearby/area-based pet discovery
+  6. Adopter preferences
+  7. Preferred breeds
+  8. Swipe history audit trail
+  9. Right swipes pipeline
+  10. Generated matches
+  11. Match + pet + adopter details
+  12. Adoption applications pipeline
+  13. Applications under review and pending
+  14. Finalized shelter decisions
+  15. Shelter inventory census (GROUP BY & HAVING $\ge 2$)
+  16. Registered adopters without applications (correlated `NOT EXISTS`)
+  17. Automated preference matching subquery
+  18. System summary operational dashboard (Aggregations + CASE)
+- **[`database/04_plsql.sql`](file:///Users/jjeevan/kinderpets/database/04_plsql.sql)**: PL/SQL procedures and functions:
+  - `add_pet`: Registers new pets with referential integrity validation.
+  - `create_match`: Deterministically creates or retrieves mutual affinity records.
+  - `record_swipe`: Upserts swipe history and triggers match generation.
+  - `submit_adoption_application`: Converts active match into formal review with home visit dates.
+  - `approve_adoption`: Atomic multi-table transaction with strict **Shelter Governance Enforcement** (blocks cross-shelter adjudication with `ORA-20020`).
+  - `reject_adoption`: Atomic rejection transaction reverting pet to 'Available'.
+  - `get_available_pet_count`: Function calculating real-time inventory.
+  - `get_adopter_match_count`: Function returning active matches.
+  - `is_pet_suitable_for_adopter`: Function scoring adopter preference suitability.
+- **[`database/05_test.sql`](file:///Users/jjeevan/kinderpets/database/05_test.sql)**: Complete test suite covering table counts, SELECT queries, full adoption lifecycle, governance authorization failure test, rejection scenario, and final audit trails.
 
 ---
 
-## ⚙️ PL/SQL Implementation
+## 🐳 Executing Against Docker Oracle Database
 
-Demonstrated in `database/05_procedures.sql`, `06_functions.sql`, and `07_triggers.sql`:
+```bash
+# Set credentials securely without exposing passwords in terminal history
+export ORACLE_USER="KINDERPETS"
+export ORACLE_SERVICE="FREEPDB1"
+export ORACLE_CONTAINER="oracle-free"
+read -s -p "Enter Oracle Password: " ORACLE_PWD && echo ""
 
-### Stored Procedures
-- `add_pet`: Validates foreign key constraints and registers new pets.
-- `record_swipe`: Upserts user swipes and evaluates deterministic matching logic.
-- `submit_adoption_application`: Creates application and shifts pet status to 'Pending'.
-- `approve_adoption`: Atomic transaction updating decision, application, and setting pet to 'Adopted'.
-- `reject_adoption`: Atomic transaction updating decision, application, and reverting pet to 'Available'.
-
-### User Functions
-- `get_available_pet_count(shelter_id)`: Aggregates real-time inventory counts.
-- `get_adopter_match_count(adopter_id)`: Returns active match count.
-- `is_pet_suitable_for_adopter(adopter_id, pet_id)`: Checks species, size, and age bounds.
-
-### Triggers
-- `trg_prevent_invalid_pet_status`: Enforces state transitions (prevents direct jump to Adopted).
-- `trg_decision_update_pet_status`: Cascades staff decisions directly to `PET.status`.
-- `trg_prevent_duplicate_application`: Prevents duplicate pending submissions for a match.
-- `trg_single_primary_photo`: Enforces single primary photo invariant.
+# Execute all 5 scripts in order:
+docker exec -i $ORACLE_CONTAINER sqlplus -s "$ORACLE_USER/$ORACLE_PWD@$ORACLE_SERVICE" < database/01_schema.sql
+docker exec -i $ORACLE_CONTAINER sqlplus -s "$ORACLE_USER/$ORACLE_PWD@$ORACLE_SERVICE" < database/02_seed_data.sql
+docker exec -i $ORACLE_CONTAINER sqlplus -s "$ORACLE_USER/$ORACLE_PWD@$ORACLE_SERVICE" < database/03_queries.sql
+docker exec -i $ORACLE_CONTAINER sqlplus -s "$ORACLE_USER/$ORACLE_PWD@$ORACLE_SERVICE" < database/04_plsql.sql
+docker exec -i $ORACLE_CONTAINER sqlplus -s "$ORACLE_USER/$ORACLE_PWD@$ORACLE_SERVICE" < database/05_test.sql
+```
 
 ---
 

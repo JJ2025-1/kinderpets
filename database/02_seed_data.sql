@@ -1,39 +1,60 @@
 -- ============================================================================
 -- Project: Kinder Pets - Pet Adoption Management System (DBMS DA2)
--- File: 03_seed_data.sql
--- Description: Realistic seed dataset for demonstrations and testing.
--- Features: 5 Shelters, 6 Staff, 10 Breeds, 16 Pets, 25+ Photos, 
---           6 Adopters, Preferences, Preferred Breeds, Swipes, Matches,
---           Applications, and Decisions.
+-- File: 02_seed_data.sql
+-- Description: Comprehensive realistic seed dataset for 12 DA1 entities.
+-- Features: 
+--   - 5 Indian Shelters (Bangalore, Mumbai, Chennai, Delhi, Pune)
+--   - 6 Shelter Staff members
+--   - 10 Master Breeds (Dogs & Cats)
+--   - 16 Pet profiles across varying ages, sizes, and statuses
+--   - 20 High-resolution pet photos (primary and secondary)
+--   - 6 Registered Adopters across Indian metros
+--   - 6 Adopter Preferences & 10 Preferred Breed mappings
+--   - Realistic Swipe history (LEFT / RIGHT)
+--   - Pre-seeded PET_MATCH records (Active, Applied, Closed)
+--   - Adoption applications (Pending, Under Review, Approved)
+--   - Completed shelter decisions adhering to governance rules
 -- ============================================================================
 
+SET FEEDBACK ON;
+SET DEFINE OFF;
+
 -- ----------------------------------------------------------------------------
--- 1. SHELTERS (5 Indian Shelters)
+-- 1. SHELTER (5 Shelters, prominent Bangalore presence)
 -- ----------------------------------------------------------------------------
 INSERT INTO SHELTER (shelter_id, shelter_name, license_no, city) VALUES 
 (1, 'Paws & Tails Animal Rescue', 'KA-BLR-SHEL-2021-042', 'Bangalore');
+
 INSERT INTO SHELTER (shelter_id, shelter_name, license_no, city) VALUES 
 (2, 'Compassion Pet Haven', 'MH-MUM-SHEL-2019-118', 'Mumbai');
+
 INSERT INTO SHELTER (shelter_id, shelter_name, license_no, city) VALUES 
 (3, 'Safe Haven Animal Trust', 'TN-CHN-SHEL-2020-087', 'Chennai');
+
 INSERT INTO SHELTER (shelter_id, shelter_name, license_no, city) VALUES 
 (4, 'Tails of Joy Foundation', 'DL-DEL-SHEL-2022-205', 'Delhi');
+
 INSERT INTO SHELTER (shelter_id, shelter_name, license_no, city) VALUES 
 (5, 'Pune Animal Welfare Society', 'MH-PUN-SHEL-2018-013', 'Pune');
 
 -- ----------------------------------------------------------------------------
--- 2. SHELTER STAFF (6 Staff Members across shelters)
+-- 2. SHELTER_STAFF (6 Staff members across shelters)
 -- ----------------------------------------------------------------------------
 INSERT INTO SHELTER_STAFF (staff_id, shelter_id, staff_name, role) VALUES 
 (1, 1, 'Dr. Rajesh Rao', 'Chief Veterinarian');
+
 INSERT INTO SHELTER_STAFF (staff_id, shelter_id, staff_name, role) VALUES 
 (2, 1, 'Priya Menon', 'Adoption Coordinator');
+
 INSERT INTO SHELTER_STAFF (staff_id, shelter_id, staff_name, role) VALUES 
 (3, 2, 'Vikram Deshmukh', 'Shelter Manager');
+
 INSERT INTO SHELTER_STAFF (staff_id, shelter_id, staff_name, role) VALUES 
 (4, 3, 'Kavita Sundaram', 'Senior Caretaker');
+
 INSERT INTO SHELTER_STAFF (staff_id, shelter_id, staff_name, role) VALUES 
 (5, 4, 'Amit Verma', 'Adoption Specialist');
+
 INSERT INTO SHELTER_STAFF (staff_id, shelter_id, staff_name, role) VALUES 
 (6, 5, 'Sunita Kulkarni', 'Rescue Coordinator');
 
@@ -52,54 +73,54 @@ INSERT INTO BREED (breed_name, species) VALUES ('Indie / Desi Cat', 'Cat');
 INSERT INTO BREED (breed_name, species) VALUES ('Ragdoll Cat', 'Cat');
 
 -- ----------------------------------------------------------------------------
--- 4. PET (16 Pets across different ages, breeds, and cities)
+-- 4. PET (16 Pets across breeds, shelters, and lifecycles)
 -- ----------------------------------------------------------------------------
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (1, 1, 'Labrador Retriever', 'Bruno', 'Male', 24, 'Large', 'Extremely friendly, loves playing fetch and great with kids', 'Active apartment or house with balcony, needs daily park walks', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
-(2, 1, 'Indie / Desi Dog', 'Luna', 'Female', 12, 'Medium', 'Affectionate, quick learner, very loyal and alert', 'Ideal for both flats and independent homes; low maintenance grooming', 'Available');
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
+(2, 1, 'Indie / Desi Dog', 'Luna', 'Female', 12, 'Medium', 'Affectionate, quick learner, very loyal and alert', 'Ideal for both flats and independent homes; low maintenance grooming', 'Pending');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (3, 2, 'Golden Retriever', 'Max', 'Male', 36, 'Large', 'Gentle, patient, sweet-natured therapy dog temperament', 'Spacious home preferred; enjoys swimming and family time', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (4, 2, 'Persian Cat', 'Milo', 'Male', 24, 'Small', 'Calm lap cat, purrs continuously when brushed', 'Quiet indoor apartment, gentle environment without loud noises', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (5, 1, 'Beagle', 'Coco', 'Female', 8, 'Small', 'Playful puppy energy, curious nose, loves social gatherings', 'Needs engaging puzzle toys and supervised outdoor yard time', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (6, 3, 'German Shepherd', 'Rocky', 'Male', 18, 'Large', 'Protective, intelligent, highly trainable, leash trained', 'Active owner experienced with large working breeds', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (7, 3, 'Siamese Cat', 'Cleo', 'Female', 14, 'Small', 'Vocal communicator, curious explorer, loves perching high', 'Indoor home with scratching posts and sunlit window spots', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (8, 4, 'Cocker Spaniel', 'Bella', 'Female', 30, 'Medium', 'Sweet-tempered, eager to please, gentle tail-wagger', 'Moderate exercise needs; loves cuddles on sofa', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (9, 4, 'Indie / Desi Cat', 'Simba', 'Male', 10, 'Small', 'Agile, playful mouser, independent yet cuddly at bedtime', 'Adaptable indoor-outdoor or apartment lifestyle', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (10, 5, 'Ragdoll Cat', 'Oliver', 'Male', 20, 'Medium', 'Relaxed, goes limp when held lovingly, docile companion', 'Strictly indoor apartment with gentle companions', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (11, 5, 'Indie / Desi Dog', 'Maya', 'Female', 16, 'Medium', 'Super resilient, vaccinated, sociable with other dogs', 'Loves morning jogs and afternoon terrace naps', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (12, 1, 'Labrador Retriever', 'Cooper', 'Male', 48, 'Large', 'Mellow senior vibe, fully house-trained, peaceful', 'Calm home seeking a relaxed companion dog', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (13, 2, 'Beagle', 'Daisy', 'Female', 15, 'Small', 'Cheerful soul, friendly to strangers, food motivated', 'Great family dog; needs fenced boundary', 'Pending');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (14, 3, 'Golden Retriever', 'Charlie', 'Male', 22, 'Large', 'High exuberance, loves water splashes and kids', 'Active household ready for outdoor weekend roadtrips', 'Adopted');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (15, 4, 'Persian Cat', 'Zoey', 'Female', 32, 'Small', 'Regal, quiet lady, prefers sleeping on soft cushions', 'Low-energy single occupant or quiet couple home', 'Available');
 
-INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, size, behaviour_desc, lifestyle_desc, status) VALUES 
+INSERT INTO PET (pet_id, shelter_id, breed_name, pet_name, gender, age_months, "SIZE", behaviour_desc, lifestyle_desc, status) VALUES 
 (16, 5, 'Indie / Desi Dog', 'Leo', 'Male', 9, 'Medium', 'Energetic puppy, quick at agility training and tricks', 'Enthusiastic first-time dog owners welcomed', 'Available');
 
 -- ----------------------------------------------------------------------------
@@ -178,7 +199,7 @@ INSERT INTO PET_PHOTO (photo_id, pet_id, photo_url, is_primary) VALUES
 (20, 16, 'https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80', 1);
 
 -- ----------------------------------------------------------------------------
--- 6. ADOPTER (6 Realistic Adopters in Indian Metros)
+-- 6. ADOPTER (6 Adopters in Indian Metros)
 -- ----------------------------------------------------------------------------
 INSERT INTO ADOPTER (adopter_id, full_name, email, phone, city, state) VALUES 
 (1, 'Rahul Sharma', 'rahul.sharma@example.com', '+91-9845012345', 'Bangalore', 'Karnataka');
@@ -199,7 +220,7 @@ INSERT INTO ADOPTER (adopter_id, full_name, email, phone, city, state) VALUES
 (6, 'Aditya Verma', 'aditya.v@example.com', '+91-9888011223', 'Bangalore', 'Karnataka');
 
 -- ----------------------------------------------------------------------------
--- 7. ADOPTER_PREFERENCE (Preferences for automated match filtering)
+-- 7. ADOPTER_PREFERENCE (Matching criteria for adopters)
 -- ----------------------------------------------------------------------------
 INSERT INTO ADOPTER_PREFERENCE (adopter_id, preferred_species, min_age_months, max_age_months, preferred_size) VALUES 
 (1, 'Dog', 6, 36, 'Large');
@@ -234,27 +255,32 @@ INSERT INTO PREFERRED_BREED (adopter_id, breed_name) VALUES (5, 'Ragdoll Cat');
 INSERT INTO PREFERRED_BREED (adopter_id, breed_name) VALUES (6, 'Beagle');
 
 -- ----------------------------------------------------------------------------
--- 9. SWIPE (Sample Tinder-style swipe history)
+-- 9. SWIPE (Tinder-style user swipe history)
 -- ----------------------------------------------------------------------------
 -- Rahul Sharma (adopter 1) swiped Bruno (RIGHT), Luna (RIGHT), Milo (LEFT)
 INSERT INTO SWIPE (swipe_id, adopter_id, pet_id, direction, swiped_at) VALUES 
 (1, 1, 1, 'RIGHT', TIMESTAMP '2026-09-01 10:30:00');
+
 INSERT INTO SWIPE (swipe_id, adopter_id, pet_id, direction, swiped_at) VALUES 
 (2, 1, 2, 'RIGHT', TIMESTAMP '2026-09-01 10:32:15');
+
 INSERT INTO SWIPE (swipe_id, adopter_id, pet_id, direction, swiped_at) VALUES 
 (3, 1, 4, 'LEFT',  TIMESTAMP '2026-09-01 10:34:00');
 
 -- Priya Patel (adopter 2) swiped Milo (RIGHT), Zoey (RIGHT), Bruno (LEFT)
 INSERT INTO SWIPE (swipe_id, adopter_id, pet_id, direction, swiped_at) VALUES 
 (4, 2, 4, 'RIGHT', TIMESTAMP '2026-09-02 11:15:00');
+
 INSERT INTO SWIPE (swipe_id, adopter_id, pet_id, direction, swiped_at) VALUES 
 (5, 2, 15, 'RIGHT', TIMESTAMP '2026-09-02 11:18:00');
+
 INSERT INTO SWIPE (swipe_id, adopter_id, pet_id, direction, swiped_at) VALUES 
 (6, 2, 1, 'LEFT',  TIMESTAMP '2026-09-02 11:20:00');
 
 -- Ananya Iyer (adopter 3) swiped Luna (RIGHT), Daisy (RIGHT)
 INSERT INTO SWIPE (swipe_id, adopter_id, pet_id, direction, swiped_at) VALUES 
 (7, 3, 2, 'RIGHT', TIMESTAMP '2026-09-03 14:00:00');
+
 INSERT INTO SWIPE (swipe_id, adopter_id, pet_id, direction, swiped_at) VALUES 
 (8, 3, 13, 'RIGHT', TIMESTAMP '2026-09-03 14:05:00');
 
@@ -263,43 +289,62 @@ INSERT INTO SWIPE (swipe_id, adopter_id, pet_id, direction, swiped_at) VALUES
 (9, 4, 14, 'RIGHT', TIMESTAMP '2026-08-20 09:30:00');
 
 -- ----------------------------------------------------------------------------
--- 10. MATCH (Pre-seeded matches from mutual interest)
+-- 10. PET_MATCH (Represents DA1 MATCH entity)
 -- ----------------------------------------------------------------------------
-INSERT INTO MATCH (match_id, adopter_id, pet_id, matched_at, status) VALUES 
+-- Match 1: Rahul Sharma + Bruno (Active)
+INSERT INTO PET_MATCH (match_id, adopter_id, pet_id, matched_at, status) VALUES 
 (1, 1, 1, TIMESTAMP '2026-09-01 10:30:05', 'Active');
 
-INSERT INTO MATCH (match_id, adopter_id, pet_id, matched_at, status) VALUES 
+-- Match 2: Rahul Sharma + Luna (Applied)
+INSERT INTO PET_MATCH (match_id, adopter_id, pet_id, matched_at, status) VALUES 
 (2, 1, 2, TIMESTAMP '2026-09-01 10:32:20', 'Applied');
 
-INSERT INTO MATCH (match_id, adopter_id, pet_id, matched_at, status) VALUES 
+-- Match 3: Priya Patel + Milo (Active)
+INSERT INTO PET_MATCH (match_id, adopter_id, pet_id, matched_at, status) VALUES 
 (3, 2, 4, TIMESTAMP '2026-09-02 11:15:10', 'Active');
 
-INSERT INTO MATCH (match_id, adopter_id, pet_id, matched_at, status) VALUES 
+-- Match 4: Ananya Iyer + Daisy (Applied)
+INSERT INTO PET_MATCH (match_id, adopter_id, pet_id, matched_at, status) VALUES 
 (4, 3, 13, TIMESTAMP '2026-09-03 14:05:05', 'Applied');
 
-INSERT INTO MATCH (match_id, adopter_id, pet_id, matched_at, status) VALUES 
+-- Match 5: Rohan Kapoor + Charlie (Closed - historically approved)
+INSERT INTO PET_MATCH (match_id, adopter_id, pet_id, matched_at, status) VALUES 
 (5, 4, 14, TIMESTAMP '2026-08-20 09:30:10', 'Closed');
 
 -- ----------------------------------------------------------------------------
--- 11. ADOPTION_APPLICATION (Formal adoption applications)
+-- 11. ADOPTION_APPLICATION (Formal applications)
 -- ----------------------------------------------------------------------------
--- Match 2: Rahul Sharma applying for Luna (Indie dog)
+-- Application 1: Rahul applying for Luna (Shelter 1 / Bangalore, assigned to Staff 2 Priya Menon from Shelter 1)
 INSERT INTO ADOPTION_APPLICATION (application_id, match_id, staff_id, home_visit_date, application_status, submitted_at) VALUES 
 (1, 2, 2, DATE '2026-09-15', 'Pending', TIMESTAMP '2026-09-01 11:00:00');
 
--- Match 4: Ananya Iyer applying for Daisy (Beagle)
+-- Application 2: Ananya applying for Daisy (Shelter 2 / Mumbai, assigned to Staff 3 Vikram Deshmukh from Shelter 2)
 INSERT INTO ADOPTION_APPLICATION (application_id, match_id, staff_id, home_visit_date, application_status, submitted_at) VALUES 
 (2, 4, 3, DATE '2026-09-18', 'Under Review', TIMESTAMP '2026-09-03 15:30:00');
 
--- Match 5: Rohan Kapoor applied for Charlie (Golden Retriever) - historically approved
+-- Application 3: Rohan applied for Charlie (Shelter 3 / Chennai, assigned to Staff 4 Kavita Sundaram from Shelter 3)
 INSERT INTO ADOPTION_APPLICATION (application_id, match_id, staff_id, home_visit_date, application_status, submitted_at) VALUES 
 (3, 5, 4, DATE '2026-08-25', 'Approved', TIMESTAMP '2026-08-20 10:00:00');
 
 -- ----------------------------------------------------------------------------
 -- 12. SHELTER_DECISION (Historical shelter adjudication)
+-- NOTE: Governance rule strictly observed - Staff 4 (Shelter 3) approved Pet 14 (Shelter 3).
 -- ----------------------------------------------------------------------------
--- Staff 4 approved adoption of Charlie (pet 14) for Rohan Kapoor (adopter 4)
 INSERT INTO SHELTER_DECISION (decision_id, pet_id, adopter_id, decision, staff_id, decided_at) VALUES 
 (1, 14, 4, 'Approved', 4, TIMESTAMP '2026-08-26 16:45:00');
 
 COMMIT;
+
+-- Verify row counts across all 12 tables
+SELECT 'SHELTER' AS entity_table, COUNT(*) AS row_count FROM SHELTER
+UNION ALL SELECT 'SHELTER_STAFF', COUNT(*) FROM SHELTER_STAFF
+UNION ALL SELECT 'BREED', COUNT(*) FROM BREED
+UNION ALL SELECT 'PET', COUNT(*) FROM PET
+UNION ALL SELECT 'PET_PHOTO', COUNT(*) FROM PET_PHOTO
+UNION ALL SELECT 'ADOPTER', COUNT(*) FROM ADOPTER
+UNION ALL SELECT 'ADOPTER_PREFERENCE', COUNT(*) FROM ADOPTER_PREFERENCE
+UNION ALL SELECT 'PREFERRED_BREED', COUNT(*) FROM PREFERRED_BREED
+UNION ALL SELECT 'SWIPE', COUNT(*) FROM SWIPE
+UNION ALL SELECT 'PET_MATCH', COUNT(*) FROM PET_MATCH
+UNION ALL SELECT 'ADOPTION_APPLICATION', COUNT(*) FROM ADOPTION_APPLICATION
+UNION ALL SELECT 'SHELTER_DECISION', COUNT(*) FROM SHELTER_DECISION;

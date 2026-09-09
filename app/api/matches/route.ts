@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'adopterId is required' }, { status: 400 });
     }
 
-    const matches = dbService.getAdopterMatches(Number(adopterId));
+    const matches = await dbService.getAdopterMatches(Number(adopterId));
     return NextResponse.json({ matches });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

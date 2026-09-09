@@ -7,18 +7,18 @@ export async function GET(request: NextRequest) {
     const id = searchParams.get('id');
 
     if (id) {
-      const adopter = dbService.getAdopter(Number(id));
+      const adopter = await dbService.getAdopter(Number(id));
       if (!adopter) {
         return NextResponse.json({ error: 'Adopter not found' }, { status: 404 });
       }
-      const preferences = dbService.getAdopterPreferences(Number(id));
+      const preferences = await dbService.getAdopterPreferences(Number(id));
       return NextResponse.json({ adopter, ...preferences });
     }
 
-    const adopters = dbService.getAdopters();
-    const shelters = dbService.getShelters();
-    const staff = dbService.getStaff();
-    const breeds = dbService.getBreeds();
+    const adopters = await dbService.getAdopters();
+    const shelters = await dbService.getShelters();
+    const staff = await dbService.getStaff();
+    const breeds = await dbService.getBreeds();
 
     return NextResponse.json({ adopters, shelters, staff, breeds });
   } catch (error: any) {
@@ -42,7 +42,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'adopter_id is required' }, { status: 400 });
     }
 
-    dbService.updateAdopterPreferences(
+    await dbService.updateAdopterPreferences(
       Number(adopter_id),
       preferred_species || null,
       Number(min_age_months) || 0,

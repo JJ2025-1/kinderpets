@@ -12,9 +12,9 @@ export async function POST(request: NextRequest) {
 
     let decisionId: number;
     if (decision === 'Approved') {
-      decisionId = dbService.approveAdoption(Number(applicationId), Number(staffId));
+      decisionId = await dbService.approveAdoption(Number(applicationId), Number(staffId));
     } else {
-      decisionId = dbService.rejectAdoption(Number(applicationId), Number(staffId));
+      decisionId = await dbService.rejectAdoption(Number(applicationId), Number(staffId));
     }
 
     return NextResponse.json({ success: true, decision, decisionId });

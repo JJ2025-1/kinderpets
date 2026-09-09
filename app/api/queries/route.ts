@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const queryId = searchParams.get('id') ? Number(searchParams.get('id')) : 1;
 
-    const result = dbService.runAcademicQuery(queryId);
+    const result = await dbService.runAcademicQuery(queryId);
     return NextResponse.json(result);
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

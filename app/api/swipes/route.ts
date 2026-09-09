@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid swipe parameters' }, { status: 400 });
     }
 
-    const result = dbService.recordSwipe(Number(adopterId), Number(petId), direction);
+    const result = await dbService.recordSwipe(Number(adopterId), Number(petId), direction);
 
     return NextResponse.json({
       success: true,
