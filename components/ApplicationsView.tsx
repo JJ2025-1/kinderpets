@@ -3,6 +3,17 @@
 import React from 'react';
 import { EnrichedApplication } from '@/lib/types';
 import { formatAge } from './PetCard';
+import { 
+  RotateCcw, 
+  Calendar, 
+  Clock, 
+  User, 
+  Building2, 
+  Check, 
+  X, 
+  AlertCircle,
+  FileText
+} from 'lucide-react';
 
 interface ApplicationsViewProps {
   applications: EnrichedApplication[];
@@ -16,127 +27,157 @@ export default function ApplicationsView({
   onRefresh,
 }: ApplicationsViewProps) {
   if (loading) {
-    return <div className="py-20 text-center text-slate-400">Loading your applications...</div>;
+    return (
+      <div className="py-24 text-center text-[#4B5250] text-xs" aria-live="polite">
+        <span>Loading adoption applications…</span>
+      </div>
+    );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-2xl font-black text-slate-900 flex items-center space-x-2">
-            <span>📋 My Adoption Applications</span>
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 font-bold">
-              {applications.length}
-            </span>
-          </h2>
-          <p className="text-xs text-slate-500 mt-1">
-            Tracking applications submitted from <code className="font-mono text-rose-600">ADOPTION_APPLICATION</code> table.
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 animate-page-in space-y-8">
+      
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#DEDAD1] pb-6">
+        <div className="space-y-2">
+          <h1 className="font-serif text-3xl sm:text-4xl font-medium text-[#14181A] tracking-tight">
+            Adoption applications
+          </h1>
+          <p className="text-sm text-[#4B5250] max-w-xl leading-relaxed">
+            Status and review tracking for applications submitted to partner shelters.
           </p>
         </div>
 
         <button
+          type="button"
           onClick={onRefresh}
-          className="px-3 py-1.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-semibold transition-colors"
+          aria-label="Refresh records"
+          className="px-3 py-1.5 rounded bg-[#FFFFFF] border border-[#DEDAD1] text-[#14181A] hover:bg-[#F3F1EA] text-xs font-medium transition-colors flex items-center space-x-1.5 cursor-pointer self-start sm:self-auto"
         >
-          ↻ Refresh
+          <RotateCcw className="w-3.5 h-3.5 text-[#4B5250]" />
+          <span>Refresh</span>
         </button>
       </div>
 
       {applications.length === 0 ? (
-        <div className="max-w-md mx-auto py-16 px-4 text-center bg-white rounded-3xl border border-dashed border-slate-200 my-8">
-          <span className="text-5xl block mb-3">📝</span>
-          <h3 className="text-xl font-bold text-slate-800 mb-1">No Applications Submitted</h3>
-          <p className="text-xs text-slate-500 max-w-xs mx-auto mb-4">
-            Match with a pet on the Discover feed and submit an adoption application to track its progress here!
-          </p>
+        <div className="max-w-md mx-auto my-16 px-4">
+          <div className="p-8 text-center bg-[#FFFFFF] border border-[#DEDAD1]">
+            <div className="w-10 h-10 rounded-full bg-[#F3F1EA] border border-[#DEDAD1] flex items-center justify-center mx-auto mb-4 text-[#4B5250]">
+              <FileText className="w-5 h-5 stroke-[1.5]" />
+            </div>
+            <h3 className="font-serif text-2xl font-medium text-[#14181A] mb-2">
+              No applications submitted
+            </h3>
+            <p className="text-xs text-[#4B5250] leading-relaxed max-w-xs mx-auto">
+              Once you match with an animal in Discovery and start an application, its verification progress will appear here.
+            </p>
+          </div>
         </div>
       ) : (
         <div className="space-y-4">
           {applications.map((app) => (
             <div
               key={app.application_id}
-              className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row md:items-center justify-between gap-6"
+              className="bg-[#FFFFFF] p-6 border border-[#DEDAD1] flex flex-col md:flex-row md:items-center justify-between gap-6 hover:border-[#C9C4B8] transition-colors"
             >
-              {/* Pet Info */}
+              {/* Pet Info Strip */}
               <div className="flex items-start space-x-4">
                 <img
                   src={app.pet.primary_photo}
                   alt={app.pet.pet_name}
-                  className="w-20 h-20 rounded-2xl object-cover border border-slate-200 flex-shrink-0"
+                  className="w-16 h-16 object-cover border border-[#DEDAD1] shrink-0"
                 />
-                <div>
-                  <div className="flex items-center space-x-2 mb-1">
-                    <span className="text-xs font-mono font-bold text-slate-400">
-                      APP #{app.application_id}
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs text-[#4B5250]">
+                      Application #{app.application_id}
                     </span>
                     <span
-                      className={`text-xs px-2.5 py-0.5 rounded-full font-bold ${
+                      className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${
                         app.application_status === 'Approved'
-                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                          ? 'bg-[#3E6259] text-white'
                           : app.application_status === 'Rejected'
-                          ? 'bg-rose-100 text-rose-800 border border-rose-300'
-                          : 'bg-amber-100 text-amber-800 border border-amber-300'
+                          ? 'bg-[#A2453A] text-white'
+                          : 'bg-[#B98A34] text-white'
                       }`}
                     >
                       {app.application_status}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-slate-900">
+                  <h3 className="font-serif text-2xl font-medium text-[#14181A]">
                     {app.pet.pet_name}
-                    <span className="text-sm font-normal text-slate-500 ml-2">
+                    <span className="text-xs font-normal text-[#4B5250] ml-2">
                       ({app.pet.breed_name}, {formatAge(app.pet.age_months)})
                     </span>
                   </h3>
 
-                  <p className="text-xs text-slate-500 mt-1">
-                    Shelter: <b>{app.pet.shelter_name}</b> ({app.pet.shelter_city})
+                  <p className="text-xs text-[#4B5250] flex items-center space-x-1.5">
+                    <Building2 className="w-3.5 h-3.5 text-[#4B5250]" />
+                    <span>{app.pet.shelter_name}</span>
+                    <span>•</span>
+                    <span>{app.pet.shelter_city}</span>
                   </p>
                 </div>
               </div>
 
               {/* Status Timeline / Details */}
-              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-xs space-y-1 min-w-[280px]">
-                <p className="text-slate-600">
-                  <span>📅 Scheduled Home Visit: </span>
-                  <b className="text-slate-900">{app.home_visit_date}</b>
-                </p>
-                <p className="text-slate-500">
-                  <span>🕒 Submitted: </span>
+              <div className="bg-[#F3F1EA] p-3.5 border border-[#DEDAD1] text-xs space-y-1 min-w-[280px]">
+                <div className="flex items-center space-x-2 text-[#14181A]">
+                  <Calendar className="w-3.5 h-3.5 text-[#3E6259] shrink-0" />
+                  <span>Scheduled home assessment:</span>
+                  <b className="font-medium">{app.home_visit_date}</b>
+                </div>
+                
+                <div className="flex items-center space-x-2 text-[#4B5250] text-[11px]">
+                  <Clock className="w-3.5 h-3.5 text-[#4B5250] shrink-0" />
+                  <span>Submitted:</span>
                   <span>{app.submitted_at}</span>
-                </p>
+                </div>
+
                 {app.staff && (
-                  <p className="text-indigo-700 font-semibold pt-1 border-t border-slate-200/60">
-                    Reviewer: {app.staff.staff_name} ({app.staff.role})
-                  </p>
+                  <div className="flex items-center space-x-2 text-[#14181A] pt-1 border-t border-[#DEDAD1] text-[11px]">
+                    <User className="w-3.5 h-3.5 text-[#3E6259] shrink-0" />
+                    <span>Reviewer: {app.staff.staff_name} ({app.staff.role})</span>
+                  </div>
                 )}
               </div>
 
-              {/* Resolution Banner */}
-              <div className="text-right">
+              {/* Resolution Status Banner */}
+              <div className="text-right shrink-0 min-w-[200px]">
                 {app.application_status === 'Approved' ? (
-                  <div className="px-4 py-2 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold text-center">
-                    🎉 Adoption Approved!
-                    <span className="block text-[11px] font-normal text-emerald-600 mt-0.5">
-                      Check your email for shelter handover steps.
+                  <div className="p-3 bg-[#FFFFFF] border border-[#3E6259] text-[#14181A] text-xs text-left sm:text-center space-y-0.5">
+                    <div className="flex items-center sm:justify-center space-x-1 text-[#3E6259] font-semibold">
+                      <Check className="w-4 h-4 stroke-[2.5]" />
+                      <span>Approved</span>
+                    </div>
+                    <span className="text-[11px] text-[#4B5250] block">
+                      Shelter handover active
                     </span>
                   </div>
                 ) : app.application_status === 'Rejected' ? (
-                  <div className="px-4 py-2 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold text-center">
-                    ❌ Not Approved
-                    <span className="block text-[11px] font-normal text-rose-600 mt-0.5">
-                      Feel free to explore other pet companions.
+                  <div className="p-3 bg-[#FFFFFF] border border-[#A2453A] text-[#14181A] text-xs text-left sm:text-center space-y-0.5">
+                    <div className="flex items-center sm:justify-center space-x-1 text-[#A2453A] font-semibold">
+                      <X className="w-4 h-4 stroke-[2.5]" />
+                      <span>Not Approved</span>
+                    </div>
+                    <span className="text-[11px] text-[#4B5250] block">
+                      Explore other shelter companions
                     </span>
                   </div>
                 ) : (
-                  <div className="px-4 py-2 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium text-center">
-                    ⏳ Under Shelter Review
-                    <span className="block text-[11px] text-amber-600 mt-0.5">
-                      Shelter team is evaluating the profile.
+                  <div className="p-3 bg-[#FFFFFF] border border-[#B98A34] text-[#14181A] text-xs text-left sm:text-center space-y-0.5">
+                    <div className="flex items-center sm:justify-center space-x-1 text-[#B98A34] font-semibold">
+                      <AlertCircle className="w-4 h-4" />
+                      <span>Under Review</span>
+                    </div>
+                    <span className="text-[11px] text-[#4B5250] block">
+                      Reviewing home verification report
                     </span>
                   </div>
                 )}
               </div>
+
             </div>
           ))}
         </div>
@@ -144,3 +185,5 @@ export default function ApplicationsView({
     </div>
   );
 }
+
+

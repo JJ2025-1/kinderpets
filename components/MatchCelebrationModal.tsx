@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { EnrichedPet } from '@/lib/types';
+import { Sparkles, Heart, ShieldCheck, ClipboardList, ArrowRight, X, MapPin } from 'lucide-react';
 
 interface MatchCelebrationModalProps {
   pet: EnrichedPet;
@@ -14,55 +15,98 @@ export default function MatchCelebrationModal({
   onClose,
   onApply,
 }: MatchCelebrationModalProps) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-sm bg-gradient-to-b from-rose-500 via-pink-600 to-slate-900 rounded-3xl overflow-hidden shadow-2xl p-6 text-white text-center">
-        {/* Animated Celebration Hearts */}
-        <div className="text-5xl animate-bounce mb-2">🎉</div>
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
-        <h2 className="text-3xl font-black tracking-tight mb-1 text-white drop-shadow-sm">
-          It's a Match!
+  return (
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#14181A]/60 backdrop-blur-sm animate-modal-in"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="match-modal-title"
+    >
+      <div className="relative w-full max-w-sm bg-[#FFFFFF] border border-[#DEDAD1] rounded-[14px] overflow-hidden shadow-xl p-7 text-center">
+        
+        {/* Dismiss X button */}
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Dismiss celebration"
+          className="absolute top-4 right-4 w-8 h-8 rounded-full border border-[#DEDAD1] bg-[#F3F1EA] hover:bg-[#DEDAD1] text-[#14181A] flex items-center justify-center transition-colors cursor-pointer"
+        >
+          <X className="w-4 h-4" />
+        </button>
+
+        {/* Status Badge */}
+        <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-sm bg-[#3E6259]/10 border border-[#3E6259]/30 text-[#3E6259] text-[11px] font-semibold mb-4">
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Mutual connection</span>
+        </div>
+
+        <h2 id="match-modal-title" className="font-serif text-3xl font-medium tracking-tight mb-2 text-[#14181A]">
+          It's a match.
         </h2>
-        <p className="text-sm text-rose-100 mb-6">
-          You and <span className="font-bold underline">{pet.pet_name}</span> showed mutual interest!
+        <p className="text-xs text-[#4B5250] mb-6 leading-relaxed">
+          Mutual interest recorded. You and <span className="font-semibold text-[#14181A]">{pet.pet_name}</span> are compatible.
         </p>
 
-        {/* Pet Avatar Circle */}
-        <div className="relative mx-auto w-36 h-36 rounded-full p-1.5 bg-white/30 backdrop-blur-md mb-6 shadow-inner">
-          <img
-            src={pet.primary_photo}
-            alt={pet.pet_name}
-            className="w-full h-full object-cover rounded-full shadow-lg"
-          />
-          <div className="absolute bottom-1 right-2 text-2xl">❤️</div>
+        {/* Pet Avatar */}
+        <div className="relative mx-auto w-32 h-32 rounded-full p-1 border-2 border-[#3E6259] mb-5">
+          <div className="w-full h-full rounded-full overflow-hidden bg-[#F3F1EA]">
+            <img
+              src={pet.primary_photo}
+              alt={pet.pet_name}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[#3E6259] text-white flex items-center justify-center shadow-sm">
+            <Heart className="w-4 h-4 fill-white stroke-[1.5]" />
+          </div>
         </div>
 
         {/* Details snippet */}
-        <div className="bg-white/10 rounded-2xl p-3.5 backdrop-blur-md mb-6 text-xs text-rose-100">
-          <p className="font-semibold text-white text-sm">{pet.pet_name}</p>
-          <p>{pet.breed_name} • {pet.shelter_name}</p>
-          <p className="text-slate-300 mt-1">📍 {pet.shelter_city} ({pet.approx_distance_km} km away)</p>
+        <div className="bg-[#F3F1EA] border border-[#DEDAD1] p-3 mb-6 text-xs text-[#14181A]">
+          <p className="font-serif text-lg font-medium text-[#14181A]">{pet.pet_name}</p>
+          <p className="text-[11px] text-[#4B5250] mt-0.5">{pet.species} • {pet.breed_name}</p>
+          <div className="flex items-center justify-center space-x-1 text-[#4B5250] mt-1.5 text-[11px]">
+            <MapPin className="w-3 h-3 text-[#3E6259]" />
+            <span>{pet.shelter_name} ({pet.shelter_city})</span>
+          </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="space-y-2.5">
+        <div className="space-y-2">
           <button
+            type="button"
             onClick={() => {
               onClose();
               onApply(pet);
             }}
-            className="w-full py-3 px-4 rounded-xl bg-white text-rose-600 font-bold text-sm shadow-lg hover:bg-rose-50 active:scale-95 transition-all"
+            aria-label={`Submit adoption application for ${pet.pet_name}`}
+            className="w-full py-2.5 px-4 bg-[#3E6259] hover:bg-[#2E4A43] text-white font-semibold text-xs transition-colors flex items-center justify-center space-x-2 cursor-pointer"
           >
-            📋 Apply for Adoption Now
+            <span>Start adoption application</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </button>
+          
           <button
+            type="button"
             onClick={onClose}
-            className="w-full py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs backdrop-blur-md transition-all"
+            aria-label="Keep exploring other companions"
+            className="w-full py-2 px-4 border border-[#DEDAD1] bg-[#FFFFFF] text-[#4B5250] hover:text-[#14181A] font-medium text-xs transition-colors cursor-pointer"
           >
-            Keep Exploring Pets
+            Continue browsing
           </button>
         </div>
       </div>
     </div>
   );
 }
+

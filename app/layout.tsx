@@ -1,9 +1,30 @@
 import type { Metadata } from 'next';
+import { Manrope, Fraunces, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 
+const sans = Manrope({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800'],
+});
+
+const serif = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  display: 'swap',
+  axes: ['opsz'],
+});
+
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
-  title: 'Kinder Pets — Tinder-Style Pet Adoption Management System',
-  description: 'DBMS DA2 Academic Project: Tinder-style pet adoption platform featuring 12 normalized entities, relational constraints, and PL/SQL business procedures.',
+  title: 'KinderPets — Verified Animal Sanctuary & Adoption Records',
+  description: 'Connecting verified animal shelters with adopters through transparent relational records.',
 };
 
 export default function RootLayout({
@@ -12,10 +33,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full bg-slate-50 antialiased">
-      <body className="min-h-full flex flex-col font-sans text-slate-800">
+    <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col font-sans bg-[#F3F1EA] text-[#14181A] selection:bg-[#3E6259] selection:text-white">
         {children}
       </body>
     </html>
   );
 }
+

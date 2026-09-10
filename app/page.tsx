@@ -242,7 +242,7 @@ export default function HomePage() {
   ).length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 selection:bg-rose-500 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#F3F1EA] text-[#14181A] selection:bg-[#3E6259] selection:text-white">
       {/* Top Header Navbar */}
       <Navbar
         currentRole={currentRole}
@@ -307,13 +307,17 @@ export default function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-100 py-6 text-center text-xs text-slate-400">
-        <p className="font-semibold text-slate-600">
-          🐾 Kinder Pets — DBMS Academic Mini-Project (DA2)
-        </p>
-        <p className="mt-1">
-          Relational Architecture: 12 Normalized Tables • Oracle SQL / PL/SQL • Node Built-in SQLite
-        </p>
+      <footer className="bg-[#FFFFFF] border-t border-[#DEDAD1] py-8 text-center text-xs text-[#4B5250]">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center space-x-2">
+            <span className="font-semibold text-[#14181A]">KinderPets Sanctuary Platform</span>
+            <span className="text-[#DEDAD1]">•</span>
+            <span>Verified shelter records & adoption management</span>
+          </div>
+          <p className="text-[11px] text-[#4B5250]">
+            12 Normalized tables (3NF) • Dual Engine: Oracle SQL / PL/SQL & Relational Backend
+          </p>
+        </div>
       </footer>
 
       {/* Modals */}
