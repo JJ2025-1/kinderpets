@@ -3,6 +3,25 @@
 import React, { useState, useEffect } from 'react';
 import { EnrichedApplication, EnrichedPet, Shelter, Breed, ShelterStaff } from '@/lib/types';
 import { formatAge } from './PetCard';
+import { 
+  Building2, 
+  ShieldCheck, 
+  Plus, 
+  RotateCcw, 
+  ClipboardList, 
+  Layers, 
+  User, 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Calendar, 
+  Check, 
+  X, 
+  Inbox, 
+  AlertCircle,
+  Database,
+  ChevronDown
+} from 'lucide-react';
 
 interface ShelterDashboardProps {
   currentStaffId: number;
@@ -106,8 +125,8 @@ export default function ShelterDashboard({
           gender: newPetGender,
           age_months: newPetAgeMonths,
           size: newPetSize,
-          behaviour_desc: newPetBehaviour || 'Gentle and affectionate shelter companion',
-          lifestyle_desc: newPetLifestyle || 'Loves family interaction and daily routines',
+          behaviour_desc: newPetBehaviour || 'Gentle and affectionate sanctuary companion',
+          lifestyle_desc: newPetLifestyle || 'Loves calm indoor routines and regular exercise',
           photo_urls: newPetPhotoUrl ? [newPetPhotoUrl] : [
             'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80'
           ],
@@ -134,229 +153,276 @@ export default function ShelterDashboard({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Staff Status Header */}
-      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-6 sm:p-8 text-white shadow-xl mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center space-x-3 mb-2">
-            <span className="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center text-2xl font-bold">
-              👨‍⚕️
-            </span>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 animate-page-in space-y-8">
+      
+      {/* Executive Staff Header Card */}
+      <div className="bg-[#FFFFFF] border border-[#DEDAD1] p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="space-y-2">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 rounded-full bg-[#3E6259] text-white flex items-center justify-center">
+              <ShieldCheck className="w-4 h-4 text-[#F3F1EA] stroke-[2]" />
+            </div>
             <div>
-              <h2 className="text-2xl font-black">{currentStaff?.staff_name || 'Staff Member'}</h2>
-              <p className="text-xs text-slate-300 font-medium">
-                {currentStaff?.role} • Shelter #{currentStaff?.shelter_id}
+              <div className="flex items-center space-x-2">
+                <h2 className="font-serif text-2xl sm:text-3xl font-medium text-[#14181A] tracking-tight">{currentStaff?.staff_name || 'Staff Officer'}</h2>
+                <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-[#F3F1EA] text-[#4B5250] border border-[#DEDAD1]">
+                  Officer #{currentStaff?.staff_id}
+                </span>
+              </div>
+              <p className="text-xs text-[#4B5250] mt-0.5">
+                {currentStaff?.role} • Shelter Facility #{currentStaff?.shelter_id}
               </p>
             </div>
           </div>
-          <p className="text-xs text-slate-400 max-w-xl">
-            Review incoming adoption applications, conduct home visit verification, record shelter decisions in <code className="text-rose-300 font-mono">SHELTER_DECISION</code>, and maintain inventory.
+          <p className="text-xs text-[#4B5250] max-w-xl leading-relaxed">
+            Adjudicate incoming adoption applications, conduct home verification assessments, and manage live sanctuary records.
           </p>
         </div>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 self-start md:self-auto">
           <button
+            type="button"
             onClick={() => setShowAddPetModal(true)}
-            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 text-white font-bold text-xs shadow-md shadow-rose-500/20 transition-all flex items-center space-x-1.5"
+            aria-label="Register new animal"
+            className="px-3.5 py-2 rounded bg-[#3E6259] hover:bg-[#2E4A43] text-white font-semibold text-xs transition-colors flex items-center space-x-1.5 cursor-pointer"
           >
-            <span>+</span>
-            <span>Add New Pet</span>
+            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span>Register companion</span>
           </button>
+          
           <button
+            type="button"
             onClick={loadData}
-            className="px-3.5 py-2.5 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-white text-xs font-semibold transition-colors"
-            title="Refresh dashboard records"
+            aria-label="Refresh shelter records"
+            className="px-3 py-2 rounded bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] text-[#4B5250] hover:text-[#14181A] text-xs font-medium transition-colors flex items-center space-x-1.5 cursor-pointer"
+            title="Refresh records"
           >
-            ↻ Refresh
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Refresh</span>
           </button>
         </div>
       </div>
 
       {/* Sub-tabs Navigation */}
-      <div className="flex items-center space-x-2 border-b border-slate-200 mb-6">
+      <div className="flex items-center space-x-6 border-b border-[#DEDAD1]" role="tablist" aria-label="Shelter Management Sections">
         <button
+          role="tab"
+          type="button"
+          aria-selected={activeSubTab === 'applications'}
           onClick={() => setActiveSubTab('applications')}
-          className={`pb-3 px-4 text-sm font-bold border-b-2 transition-all flex items-center space-x-2 ${
+          className={`py-3 text-xs font-semibold relative transition-colors flex items-center space-x-2 cursor-pointer focus-visible:outline-none ${
             activeSubTab === 'applications'
-              ? 'border-rose-500 text-rose-600'
-              : 'border-transparent text-slate-500 hover:text-slate-700'
+              ? 'text-[#14181A]'
+              : 'text-[#4B5250] hover:text-[#14181A]'
           }`}
         >
-          <span>📋 Adoption Applications</span>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
+          <ClipboardList className="w-4 h-4" />
+          <span>Applications queue</span>
+          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-[#F3F1EA] text-[#14181A] font-bold border border-[#DEDAD1]">
             {applications.length}
           </span>
+          {activeSubTab === 'applications' && (
+            <span className="absolute bottom-0 inset-x-0 h-[2px] bg-[#3E6259]" />
+          )}
         </button>
 
         <button
+          role="tab"
+          type="button"
+          aria-selected={activeSubTab === 'pets'}
           onClick={() => setActiveSubTab('pets')}
-          className={`pb-3 px-4 text-sm font-bold border-b-2 transition-all flex items-center space-x-2 ${
+          className={`py-3 text-xs font-semibold relative transition-colors flex items-center space-x-2 cursor-pointer focus-visible:outline-none ${
             activeSubTab === 'pets'
-              ? 'border-rose-500 text-rose-600'
-              : 'border-transparent text-slate-500 hover:text-slate-700'
+              ? 'text-[#14181A]'
+              : 'text-[#4B5250] hover:text-[#14181A]'
           }`}
         >
-          <span>🐾 Shelter Pet Inventory</span>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
+          <Layers className="w-4 h-4" />
+          <span>Sanctuary inventory</span>
+          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-[#F3F1EA] text-[#14181A] font-bold border border-[#DEDAD1]">
             {pets.length}
           </span>
+          {activeSubTab === 'pets' && (
+            <span className="absolute bottom-0 inset-x-0 h-[2px] bg-[#3E6259]" />
+          )}
         </button>
       </div>
 
+      {/* Content Area */}
       {loading ? (
-        <div className="py-20 text-center text-slate-400">Loading shelter records...</div>
+        <div className="py-24 text-center text-[#4B5250] text-xs" aria-live="polite">
+          <span>Loading shelter records…</span>
+        </div>
       ) : activeSubTab === 'applications' ? (
-        /* Applications List */
         applications.length === 0 ? (
-          <div className="bg-white rounded-3xl p-12 text-center border border-dashed border-slate-200">
-            <span className="text-4xl block mb-2">📭</span>
-            <p className="text-slate-600 font-semibold">No applications recorded yet.</p>
-            <p className="text-xs text-slate-400 mt-1">
-              Switch to an Adopter profile, like a pet, and submit an application to see it here.
-            </p>
+          <div className="max-w-md mx-auto my-16 px-4">
+            <div className="p-8 sm:p-10 text-center bg-[#FFFFFF] border border-[#DEDAD1]">
+              <div className="w-12 h-12 rounded-full bg-[#F3F1EA] border border-[#DEDAD1] flex items-center justify-center mx-auto mb-4 text-[#4B5250]">
+                <Inbox className="w-5 h-5 stroke-[1.5]" />
+              </div>
+              <h3 className="font-serif text-2xl font-normal text-[#14181A] mb-2">
+                Queue clear
+              </h3>
+              <p className="text-xs text-[#4B5250] leading-relaxed max-w-xs mx-auto">
+                No applications currently require adjudication. Switch to an Adopter persona to submit an application.
+              </p>
+            </div>
           </div>
         ) : (
           <div className="space-y-4">
             {applications.map((app) => (
               <div
                 key={app.application_id}
-                className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col lg:flex-row lg:items-center justify-between gap-6"
+                className="bg-[#FFFFFF] p-6 border border-[#DEDAD1] flex flex-col lg:flex-row lg:items-center justify-between gap-6 hover:border-[#C9C4B8] transition-colors"
               >
                 {/* Left: Pet Info & Photo */}
                 <div className="flex items-start space-x-4">
                   <img
                     src={app.pet.primary_photo}
                     alt={app.pet.pet_name}
-                    className="w-20 h-20 rounded-2xl object-cover border border-slate-200 flex-shrink-0"
+                    className="w-20 h-20 object-cover border border-[#DEDAD1] flex-shrink-0"
                   />
                   <div>
-                    <div className="flex items-center space-x-2 mb-1">
-                      <span className="text-xs font-mono font-bold text-slate-400">
-                        APP #{app.application_id}
+                    <div className="flex items-center space-x-2 mb-1.5">
+                      <span className="text-[11px] font-semibold text-[#4B5250]">
+                        Record #{app.application_id}
                       </span>
                       <span
-                        className={`text-xs px-2.5 py-0.5 rounded-full font-bold ${
+                        className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-sm border ${
                           app.application_status === 'Approved'
-                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                            ? 'bg-[#3E6259]/10 text-[#3E6259] border-[#3E6259]/30'
                             : app.application_status === 'Rejected'
-                            ? 'bg-rose-50 text-rose-700 border border-rose-200'
-                            : 'bg-amber-50 text-amber-700 border border-amber-200'
+                            ? 'bg-[#A2453A]/10 text-[#A2453A] border-[#A2453A]/30'
+                            : 'bg-[#B98A34]/10 text-[#B98A34] border-[#B98A34]/30'
                         }`}
                       >
                         {app.application_status}
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-slate-900">
+                    <h3 className="font-serif text-2xl font-normal text-[#14181A]">
                       {app.pet.pet_name}
-                      <span className="text-sm font-normal text-slate-500 ml-2">
+                      <span className="text-xs font-sans font-normal text-[#4B5250] ml-2">
                         ({app.pet.breed_name}, {formatAge(app.pet.age_months)})
                       </span>
                     </h3>
 
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      Shelter: <b>{app.pet.shelter_name}</b> ({app.pet.shelter_city})
+                    <p className="text-xs text-[#4B5250] mt-1 flex items-center space-x-1.5">
+                      <Building2 className="w-3.5 h-3.5 text-[#4B5250]" />
+                      <span>{app.pet.shelter_name}</span>
+                      <span className="text-[#DEDAD1]">•</span>
+                      <span>{app.pet.shelter_city}</span>
                     </p>
                   </div>
                 </div>
 
-                {/* Middle: Adopter & Verification Info */}
-                <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-100 text-xs space-y-1 min-w-[260px]">
-                  <p className="font-bold text-slate-800 flex items-center space-x-1">
-                    <span>👤 Applicant:</span>
-                    <span>{app.adopter.full_name}</span>
-                  </p>
-                  <p className="text-slate-600">
-                    📞 {app.adopter.phone} • ✉️ {app.adopter.email}
-                  </p>
-                  <p className="text-slate-600">
-                    📍 {app.adopter.city}, {app.adopter.state}
-                  </p>
-                  <p className="text-indigo-700 font-semibold pt-1 border-t border-slate-200/60 flex items-center space-x-1">
-                    <span>📅 Home Visit:</span>
-                    <span>{app.home_visit_date}</span>
-                  </p>
+                {/* Middle: Adopter Credentials */}
+                <div className="bg-[#F3F1EA] p-4 border border-[#DEDAD1] text-xs space-y-1.5 min-w-[280px]">
+                  <div className="flex items-center space-x-1.5 font-semibold text-[#14181A]">
+                    <User className="w-3.5 h-3.5 text-[#3E6259]" />
+                    <span>Applicant: {app.adopter.full_name}</span>
+                  </div>
+                  <div className="flex items-center space-x-1.5 text-[#4B5250] text-[11px]">
+                    <Phone className="w-3 h-3 text-[#4B5250]" />
+                    <span>{app.adopter.phone}</span>
+                    <span className="text-[#DEDAD1]">•</span>
+                    <Mail className="w-3 h-3 text-[#4B5250]" />
+                    <span>{app.adopter.email}</span>
+                  </div>
+                  <div className="flex items-center space-x-1.5 text-[#4B5250] text-[11px]">
+                    <MapPin className="w-3 h-3 text-[#4B5250]" />
+                    <span>{app.adopter.city}, {app.adopter.state}</span>
+                  </div>
+                  <div className="flex items-center space-x-1.5 text-[#14181A] font-medium pt-1.5 border-t border-[#DEDAD1] text-[11px]">
+                    <Calendar className="w-3.5 h-3.5 text-[#3E6259]" />
+                    <span>Home Visit: {app.home_visit_date}</span>
+                  </div>
                 </div>
 
                 {/* Right: Actions */}
-                <div className="flex flex-col sm:flex-row items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-center gap-2.5">
                   {app.application_status === 'Pending' || app.application_status === 'Under Review' ? (
                     <>
                       <button
+                        type="button"
                         onClick={() => handleDecision(app.application_id, 'Approved')}
                         disabled={actionLoading === app.application_id}
-                        className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-colors flex items-center justify-center space-x-1"
+                        aria-label={`Approve application ${app.application_id}`}
+                        className="w-full sm:w-auto px-4 py-2 bg-[#3E6259] hover:bg-[#2E4A43] focus-visible:outline-none text-white text-xs font-semibold transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
                       >
-                        <span>✅</span>
-                        <span>Approve Adoption</span>
+                        <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                        <span>Approve</span>
                       </button>
                       <button
+                        type="button"
                         onClick={() => handleDecision(app.application_id, 'Rejected')}
                         disabled={actionLoading === app.application_id}
-                        className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-sm transition-colors flex items-center justify-center space-x-1"
+                        aria-label={`Reject application ${app.application_id}`}
+                        className="w-full sm:w-auto px-4 py-2 bg-[#FFFFFF] border border-[#A2453A]/40 text-[#A2453A] hover:bg-[#A2453A]/10 focus-visible:outline-none text-xs font-semibold transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
                       >
-                        <span>❌</span>
+                        <X className="w-3.5 h-3.5 text-[#A2453A]" />
                         <span>Reject</span>
                       </button>
                     </>
                   ) : (
-                    <div className="text-xs text-slate-500 font-medium px-4 py-2 rounded-xl bg-slate-50 border border-slate-200">
-                      Adjudicated as <b>{app.application_status}</b>
+                    <div className="text-xs text-[#4B5250] px-3.5 py-2 bg-[#F3F1EA] border border-[#DEDAD1]">
+                      Status: <span className="font-semibold text-[#14181A]">{app.application_status}</span>
                     </div>
                   )}
                 </div>
+
               </div>
             ))}
           </div>
         )
       ) : (
-        /* Pets Inventory Table */
-        <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+        /* Sanctuary Pet Inventory Table */
+        <div className="bg-[#FFFFFF] border border-[#DEDAD1] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 font-bold uppercase tracking-wider">
+              <thead className="bg-[#F3F1EA] border-b border-[#DEDAD1] text-[#4B5250] font-semibold text-[11px]">
                 <tr>
-                  <th className="p-4">Pet Name</th>
-                  <th className="p-4">Species / Breed</th>
-                  <th className="p-4">Age / Size</th>
-                  <th className="p-4">Shelter</th>
+                  <th className="p-4">Companion Animal</th>
+                  <th className="p-4">Species & Breed</th>
+                  <th className="p-4">Age / Size / Gender</th>
+                  <th className="p-4">Shelter Facility</th>
                   <th className="p-4">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-700">
+              <tbody className="divide-y divide-[#DEDAD1] text-[#14181A]">
                 {pets.map((p) => (
-                  <tr key={p.pet_id} className="hover:bg-slate-50/70 transition-colors">
-                    <td className="p-4 flex items-center space-x-3">
+                  <tr key={p.pet_id} className="hover:bg-[#F3F1EA]/60 transition-colors">
+                    <td className="p-4 flex items-center space-x-3.5">
                       <img
                         src={p.primary_photo}
                         alt=""
-                        className="w-10 h-10 rounded-xl object-cover"
+                        className="w-11 h-11 object-cover border border-[#DEDAD1] flex-shrink-0"
                       />
                       <div>
-                        <span className="font-bold text-slate-900 block">{p.pet_name}</span>
-                        <span className="text-[11px] text-slate-400">ID #{p.pet_id}</span>
+                        <span className="font-serif text-base block font-medium">{p.pet_name}</span>
+                        <span className="text-[11px] text-[#4B5250]">ID #{p.pet_id}</span>
                       </div>
                     </td>
                     <td className="p-4">
-                      <span className="font-medium text-slate-800">{p.breed_name}</span>
-                      <span className="block text-slate-400">{p.species}</span>
+                      <span className="font-medium text-[#14181A]">{p.breed_name}</span>
+                      <span className="block text-[#4B5250] text-[11px]">{p.species}</span>
                     </td>
                     <td className="p-4">
-                      <span>{formatAge(p.age_months)}</span>
-                      <span className="block text-slate-400">{p.size} • {p.gender}</span>
+                      <span className="text-[#14181A]">{formatAge(p.age_months)}</span>
+                      <span className="block text-[#4B5250] text-[11px]">{p.size} • {p.gender}</span>
                     </td>
                     <td className="p-4">
-                      <span className="font-medium">{p.shelter_name}</span>
-                      <span className="block text-slate-400">{p.shelter_city}</span>
+                      <span className="font-medium text-[#14181A]">{p.shelter_name}</span>
+                      <span className="block text-[#4B5250] text-[11px]">{p.shelter_city}</span>
                     </td>
                     <td className="p-4">
                       <span
-                        className={`px-2.5 py-1 rounded-full font-bold text-[11px] ${
+                        className={`px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-sm border ${
                           p.status === 'Available'
-                            ? 'bg-emerald-100 text-emerald-800'
+                            ? 'bg-[#3E6259]/10 text-[#3E6259] border-[#3E6259]/30'
                             : p.status === 'Adopted'
-                            ? 'bg-indigo-100 text-indigo-800'
-                            : 'bg-amber-100 text-amber-800'
+                            ? 'bg-[#14181A] text-[#F3F1EA] border-[#14181A]'
+                            : 'bg-[#B98A34]/10 text-[#B98A34] border-[#B98A34]/30'
                         }`}
                       >
                         {p.status}
@@ -370,176 +436,210 @@ export default function ShelterDashboard({
         </div>
       )}
 
-      {/* Add New Pet Modal (Simulates PL/SQL add_pet Procedure) */}
+      {/* Add New Pet Modal */}
       {showAddPetModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-xs">
-          <div className="relative w-full max-w-lg bg-white rounded-3xl overflow-hidden shadow-2xl">
-            <div className="bg-gradient-to-r from-slate-900 to-slate-800 p-6 text-white flex items-center justify-between">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#14181A]/60 backdrop-blur-sm overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="add-pet-title"
+        >
+          <div className="relative w-full max-w-lg bg-[#FFFFFF] rounded-[14px] overflow-hidden border border-[#DEDAD1] animate-modal-in shadow-xl">
+            
+            <div className="p-6 border-b border-[#DEDAD1] flex items-center justify-between">
               <div>
-                <h3 className="text-xl font-bold">Add New Pet Profile</h3>
-                <p className="text-xs text-slate-300">
-                  Executes stored procedure: <code className="text-rose-400 font-mono">add_pet()</code>
-                </p>
+                <h3 id="add-pet-title" className="font-serif text-2xl font-medium text-[#14181A]">Register Companion</h3>
+                <p className="text-xs text-[#4B5250] mt-0.5">Add a new verified animal to sanctuary records</p>
               </div>
               <button
+                type="button"
                 onClick={() => setShowAddPetModal(false)}
-                className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center"
+                aria-label="Close modal"
+                className="w-8 h-8 rounded-full border border-[#DEDAD1] bg-[#F3F1EA] hover:bg-[#DEDAD1] text-[#14181A] flex items-center justify-center transition-colors cursor-pointer"
               >
-                ✕
+                <X className="w-4 h-4" />
               </button>
             </div>
 
             <form onSubmit={handleAddPet} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                    Pet Name *
+                  <label htmlFor="new-pet-name" className="block text-xs font-semibold text-[#14181A] mb-1.5">
+                    Companion name *
                   </label>
                   <input
+                    id="new-pet-name"
                     type="text"
                     required
                     placeholder="e.g. Leo"
                     value={newPetName}
                     onChange={(e) => setNewPetName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-medium focus:ring-2 focus:ring-rose-400 focus:outline-none"
+                    className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                  <label htmlFor="new-pet-breed" className="block text-xs font-semibold text-[#14181A] mb-1.5">
                     Breed *
                   </label>
-                  <select
-                    value={newPetBreed}
-                    onChange={(e) => setNewPetBreed(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-medium focus:ring-2 focus:ring-rose-400 focus:outline-none"
-                  >
-                    {breeds.map((b) => (
-                      <option key={b.breed_name} value={b.breed_name}>
-                        {b.breed_name} ({b.species})
-                      </option>
-                    ))}
-                  </select>
+                  <div className="relative">
+                    <select
+                      id="new-pet-breed"
+                      value={newPetBreed}
+                      onChange={(e) => setNewPetBreed(e.target.value)}
+                      className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] cursor-pointer"
+                    >
+                      {breeds.map((b) => (
+                        <option key={b.breed_name} value={b.breed_name}>
+                          {b.breed_name} ({b.species})
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="w-3.5 h-3.5 text-[#4B5250] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                  <label htmlFor="new-pet-gender" className="block text-xs font-semibold text-[#14181A] mb-1.5">
                     Gender *
                   </label>
-                  <select
-                    value={newPetGender}
-                    onChange={(e) => setNewPetGender(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-medium"
-                  >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      id="new-pet-gender"
+                      value={newPetGender}
+                      onChange={(e) => setNewPetGender(e.target.value as any)}
+                      className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] cursor-pointer"
+                    >
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                    <ChevronDown className="w-3.5 h-3.5 text-[#4B5250] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                    Age (Months) *
+                  <label htmlFor="new-pet-age" className="block text-xs font-semibold text-[#14181A] mb-1.5">
+                    Age (months) *
                   </label>
                   <input
+                    id="new-pet-age"
                     type="number"
                     min={1}
                     max={240}
                     required
                     value={newPetAgeMonths}
                     onChange={(e) => setNewPetAgeMonths(Number(e.target.value))}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-medium"
+                    className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                  <label htmlFor="new-pet-size" className="block text-xs font-semibold text-[#14181A] mb-1.5">
                     Size *
                   </label>
-                  <select
-                    value={newPetSize}
-                    onChange={(e) => setNewPetSize(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-medium"
-                  >
-                    <option value="Small">Small</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Large">Large</option>
-                    <option value="Extra Large">Extra Large</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      id="new-pet-size"
+                      value={newPetSize}
+                      onChange={(e) => setNewPetSize(e.target.value as any)}
+                      className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] cursor-pointer"
+                    >
+                      <option value="Small">Small</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Large">Large</option>
+                      <option value="Extra Large">Extra Large</option>
+                    </select>
+                    <ChevronDown className="w-3.5 h-3.5 text-[#4B5250] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  Housing Shelter *
+                <label htmlFor="new-pet-shelter" className="block text-xs font-semibold text-[#14181A] mb-1.5">
+                  Housing shelter *
                 </label>
-                <select
-                  value={newPetShelterId}
-                  onChange={(e) => setNewPetShelterId(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-medium"
-                >
-                  {shelters.map((s) => (
-                    <option key={s.shelter_id} value={s.shelter_id}>
-                      {s.shelter_name} ({s.city})
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <select
+                    id="new-pet-shelter"
+                    value={newPetShelterId}
+                    onChange={(e) => setNewPetShelterId(Number(e.target.value))}
+                    className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] cursor-pointer"
+                  >
+                    {shelters.map((s) => (
+                      <option key={s.shelter_id} value={s.shelter_id}>
+                        {s.shelter_name} ({s.city})
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="w-3.5 h-3.5 text-[#4B5250] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  Photo URL (PET_PHOTO Table)
+                <label htmlFor="new-pet-photo" className="block text-xs font-semibold text-[#14181A] mb-1.5">
+                  Photo URL
                 </label>
                 <input
+                  id="new-pet-photo"
                   type="url"
-                  placeholder="https://images.unsplash.com/..."
+                  placeholder="https://images.unsplash.com/…"
                   value={newPetPhotoUrl}
                   onChange={(e) => setNewPetPhotoUrl(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-medium"
+                  className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  Behaviour Description
+                <label htmlFor="new-pet-behaviour" className="block text-xs font-semibold text-[#14181A] mb-1.5">
+                  Behaviour notes
                 </label>
                 <textarea
+                  id="new-pet-behaviour"
                   rows={2}
                   value={newPetBehaviour}
                   onChange={(e) => setNewPetBehaviour(e.target.value)}
                   placeholder="e.g. Playful, friendly with other animals, loves gentle treats"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-medium"
+                  className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] leading-relaxed"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  Ideal Lifestyle
+                <label htmlFor="new-pet-lifestyle" className="block text-xs font-semibold text-[#14181A] mb-1.5">
+                  Ideal home environment
                 </label>
                 <textarea
+                  id="new-pet-lifestyle"
                   rows={2}
                   value={newPetLifestyle}
                   onChange={(e) => setNewPetLifestyle(e.target.value)}
-                  placeholder="e.g. Apartment friendly, needs 30 mins walking twice a day"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-medium"
+                  placeholder="e.g. Apartment friendly, needs regular daily walks"
+                  className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] leading-relaxed"
                 />
               </div>
 
-              <div className="flex items-center justify-end space-x-3 pt-3 border-t border-slate-100">
+              <div className="flex items-center justify-end space-x-3 pt-3 border-t border-[#DEDAD1]">
                 <button
                   type="button"
                   onClick={() => setShowAddPetModal(false)}
-                  className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 text-xs font-semibold"
+                  className="px-4 py-2 border border-[#DEDAD1] bg-[#FFFFFF] text-[#4B5250] hover:text-[#14181A] text-xs font-medium cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={addPetSubmitting}
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold text-xs shadow-md"
+                  className="px-4 py-2 bg-[#3E6259] hover:bg-[#2E4A43] text-white font-semibold text-xs transition-colors cursor-pointer flex items-center space-x-2"
                 >
-                  {addPetSubmitting ? 'Adding...' : 'Register Pet'}
+                  {addPetSubmitting ? (
+                    <span>Registering…</span>
+                  ) : (
+                    <>
+                      <Check className="w-4 h-4 text-white" />
+                      <span>Register companion</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>

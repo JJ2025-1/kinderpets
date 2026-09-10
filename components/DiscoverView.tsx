@@ -2,8 +2,15 @@
 
 import React, { useState } from 'react';
 import { EnrichedPet, Breed, Adopter } from '@/lib/types';
-import PetCard from './PetCard';
-import SwipeDeck from './SwipeDeck';
+import PetCard from '@/components/PetCard';
+import SwipeDeck from '@/components/SwipeDeck';
+import { 
+  Search, 
+  ChevronDown, 
+  Layers, 
+  LayoutGrid, 
+  SearchX
+} from 'lucide-react';
 
 interface DiscoverViewProps {
   pets: EnrichedPet[];
@@ -33,11 +40,12 @@ export default function DiscoverView({
   onFilterChange,
   onResetSwipes,
 }: DiscoverViewProps) {
-  const [viewMode, setViewMode] = useState<'deck' | 'grid'>('deck');
+  const [viewMode, setViewMode] = useState<'grid' | 'deck'>('grid');
   const [speciesFilter, setSpeciesFilter] = useState('All');
   const [breedFilter, setBreedFilter] = useState('All');
   const [sizeFilter, setSizeFilter] = useState('All');
   const [distanceFilter, setDistanceFilter] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const filteredBreeds = allBreeds.filter((b) =>
     speciesFilter === 'All' ? true : b.species === speciesFilter
@@ -84,131 +92,180 @@ export default function DiscoverView({
     });
   };
 
+  const displayedPets = pets.filter((p) => {
+    if (!searchQuery.trim()) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      p.pet_name.toLowerCase().includes(query) ||
+      p.breed_name.toLowerCase().includes(query) ||
+      p.shelter_name.toLowerCase().includes(query) ||
+      p.shelter_city.toLowerCase().includes(query)
+    );
+  });
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Hero Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center space-x-2 mb-1">
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-600 font-bold border border-rose-200">
-              📍 Current City: {currentAdopter?.city || 'Bangalore'}
-            </span>
-            <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-500 font-medium">
-              {pets.length} available companions found
-            </span>
-          </div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight">
-            Discover Pets Near You
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 animate-page-in space-y-8">
+      
+      {/* Asymmetric Hero: Large Serif Headline + Single Real Statistic */}
+      <section className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end border-b border-[#DEDAD1] pb-8">
+        <div className="md:col-span-7 space-y-3">
+          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium text-[#14181A] tracking-tight leading-[1.15] max-w-md">
+            Meet the animals who need a home.
           </h1>
+          <p className="text-sm text-[#4B5250] max-w-lg leading-relaxed">
+            Direct records from certified shelters in {currentAdopter?.city || 'Bengaluru'} and nationwide. Every profile is verified by shelter staff.
+          </p>
         </div>
 
-        {/* View Mode Switcher (Deck vs Grid) */}
-        <div className="flex items-center space-x-1.5 bg-slate-100 p-1.5 rounded-2xl self-start md:self-auto">
-          <button
-            onClick={() => setViewMode('deck')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 ${
-              viewMode === 'deck'
-                ? 'bg-white text-rose-600 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <span>🃏</span>
-            <span>Tinder Swipe</span>
-          </button>
-          <button
-            onClick={() => setViewMode('grid')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 ${
-              viewMode === 'grid'
-                ? 'bg-white text-rose-600 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <span>🔲</span>
-            <span>Browse Grid</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Discovery Filters Bar */}
-      <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-xs mb-8">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {/* Species */}
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-              Species
-            </label>
-            <select
-              value={speciesFilter}
-              onChange={(e) => handleSpeciesChange(e.target.value)}
-              className="w-full text-xs font-medium bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-400"
-            >
-              <option value="All">All Species (Dogs & Cats)</option>
-              <option value="Dog">🐶 Dogs Only</option>
-              <option value="Cat">🐱 Cats Only</option>
-            </select>
+        <div className="md:col-span-5 flex flex-col md:items-end justify-between space-y-4">
+          {/* Statistic with plain language label under hairline rule */}
+          <div className="w-full max-w-xs border-t border-[#DEDAD1] pt-3 text-left md:text-right">
+            <span className="font-serif text-3xl font-medium text-[#14181A] block tabular-nums">
+              {pets.length}
+            </span>
+            <span className="text-xs text-[#4B5250] block mt-0.5">
+              animals currently in care across 6 verified shelters
+            </span>
           </div>
 
-          {/* Breed */}
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-              Breed
-            </label>
+          {/* View Mode Switcher */}
+          <div 
+            className="flex items-center space-x-1 p-0.5 bg-[#FFFFFF] border border-[#DEDAD1] rounded self-start md:self-end" 
+            role="group" 
+            aria-label="View Mode Switcher"
+          >
+            <button
+              type="button"
+              onClick={() => setViewMode('grid')}
+              aria-label="Switch to grid view"
+              aria-pressed={viewMode === 'grid'}
+              className={`px-3 py-1.5 rounded text-xs font-semibold tracking-tight transition-colors flex items-center space-x-1.5 cursor-pointer ${
+                viewMode === 'grid'
+                  ? 'bg-[#3E6259] text-white'
+                  : 'text-[#4B5250] hover:text-[#14181A]'
+              }`}
+            >
+              <LayoutGrid className="w-3.5 h-3.5" />
+              <span>Grid view</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setViewMode('deck')}
+              aria-label="Switch to deck swipe view"
+              aria-pressed={viewMode === 'deck'}
+              className={`px-3 py-1.5 rounded text-xs font-semibold tracking-tight transition-colors flex items-center space-x-1.5 cursor-pointer ${
+                viewMode === 'deck'
+                  ? 'bg-[#3E6259] text-white'
+                  : 'text-[#4B5250] hover:text-[#14181A]'
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span>Tactile deck</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Filter Row (Bordered Rectangles with 4px Radius) */}
+      <section 
+        className="bg-[#FFFFFF] border border-[#DEDAD1] p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4" 
+        aria-label="Filter companions"
+      >
+        {/* Species Segmented Toggle (4px radius) */}
+        <div className="flex items-center space-x-1 p-0.5 bg-[#F3F1EA] border border-[#DEDAD1] rounded self-start">
+          {['All', 'Dog', 'Cat'].map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => handleSpeciesChange(s)}
+              className={`px-3 py-1.5 rounded text-xs font-semibold transition-colors cursor-pointer ${
+                speciesFilter === s
+                  ? 'bg-[#3E6259] text-white'
+                  : 'text-[#4B5250] hover:text-[#14181A]'
+              }`}
+            >
+              {s === 'All' ? 'All species' : s === 'Dog' ? 'Dogs' : 'Cats'}
+            </button>
+          ))}
+        </div>
+
+        {/* Search Input (4px radius) */}
+        <div className="relative min-w-[220px] flex-1 max-w-sm">
+          <Search className="w-3.5 h-3.5 text-[#4B5250] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <input
+            type="text"
+            placeholder="Search by name, breed, or shelter…"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-[#FFFFFF] border border-[#DEDAD1] rounded pl-9 pr-3 py-1.5 text-xs text-[#14181A] placeholder-[#4B5250]/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] transition-colors"
+          />
+        </div>
+
+        {/* Two Dropdown Style Filters (4px radius) */}
+        <div className="flex items-center flex-wrap gap-2.5">
+          {/* Breed Select */}
+          <div className="relative">
             <select
+              id="filter-breed"
+              aria-label="Filter by breed"
               value={breedFilter}
               onChange={(e) => handleBreedChange(e.target.value)}
-              className="w-full text-xs font-medium bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-400"
+              className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] rounded pl-3 pr-7 py-1.5 text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer transition-colors"
             >
-              <option value="All">All Breeds</option>
+              <option value="All">All breeds</option>
               {filteredBreeds.map((b) => (
                 <option key={b.breed_name} value={b.breed_name}>
                   {b.breed_name}
                 </option>
               ))}
             </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#4B5250] absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
 
-          {/* Size */}
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-              Size
-            </label>
+          {/* Size Select */}
+          <div className="relative">
             <select
+              id="filter-size"
+              aria-label="Filter by size"
               value={sizeFilter}
               onChange={(e) => handleSizeChange(e.target.value)}
-              className="w-full text-xs font-medium bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-400"
+              className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] rounded pl-3 pr-7 py-1.5 text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer transition-colors"
             >
-              <option value="All">All Sizes</option>
-              <option value="Small">Small (Lap & Toy)</option>
-              <option value="Medium">Medium (Standard)</option>
-              <option value="Large">Large (Active)</option>
-              <option value="Extra Large">Extra Large</option>
+              <option value="All">All sizes</option>
+              <option value="Small">Small</option>
+              <option value="Medium">Medium</option>
+              <option value="Large">Large</option>
+              <option value="Extra Large">Extra large</option>
             </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#4B5250] absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
 
-          {/* Distance */}
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-              Location / Radius
-            </label>
+          {/* Radius Select */}
+          <div className="relative">
             <select
+              id="filter-distance"
+              aria-label="Filter by distance"
               value={distanceFilter}
               onChange={(e) => handleDistanceChange(e.target.value)}
-              className="w-full text-xs font-medium bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-400"
+              className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] rounded pl-3 pr-7 py-1.5 text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer transition-colors"
             >
-              <option value="all">Anywhere in India</option>
-              <option value="nearby">📍 Nearby (Within 50 km)</option>
+              <option value="all">All locations</option>
+              <option value="nearby">Nearby (within 50 km)</option>
             </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#4B5250] absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Content Area: Swipe Deck or Grid */}
+      {/* Content Area */}
       {loading ? (
-        <div className="py-20 text-center text-slate-400">Loading pet profiles...</div>
+        <div className="py-24 text-center text-[#4B5250] text-xs" aria-live="polite">
+          <span>Loading animal records…</span>
+        </div>
       ) : viewMode === 'deck' ? (
         <SwipeDeck
-          pets={pets}
+          pets={displayedPets}
           onSwipeLeft={onSwipeLeft}
           onSwipeRight={onSwipeRight}
           onViewDetails={onViewDetails}
@@ -216,15 +273,19 @@ export default function DiscoverView({
         />
       ) : (
         <div>
-          {pets.length === 0 ? (
-            <div className="text-center py-16 bg-white rounded-3xl border border-dashed border-slate-200">
-              <span className="text-4xl block mb-2">🔍</span>
-              <p className="font-bold text-slate-800">No pets match your filter criteria.</p>
-              <p className="text-xs text-slate-400 mt-1">Try broadening your species or size filters.</p>
+          {displayedPets.length === 0 ? (
+            <div className="text-center py-20 bg-[#FFFFFF] border border-[#DEDAD1] max-w-lg mx-auto p-8">
+              <div className="w-10 h-10 rounded-full bg-[#F3F1EA] border border-[#DEDAD1] flex items-center justify-center mx-auto mb-3 text-[#4B5250]">
+                <SearchX className="w-5 h-5" />
+              </div>
+              <p className="font-serif text-2xl font-medium text-[#14181A]">No animals matched</p>
+              <p className="text-xs text-[#4B5250] mt-1.5 max-w-xs mx-auto leading-relaxed">
+                Try widening your species, breed, or location filters.
+              </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {pets.map((pet) => (
+              {displayedPets.map((pet) => (
                 <PetCard
                   key={pet.pet_id}
                   pet={pet}
@@ -240,3 +301,5 @@ export default function DiscoverView({
     </div>
   );
 }
+
+

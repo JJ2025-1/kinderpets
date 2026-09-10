@@ -1,6 +1,12 @@
 'use client';
 
 import React from 'react';
+import { 
+  ShieldCheck, 
+  User,
+  ChevronDown,
+  RotateCcw
+} from 'lucide-react';
 
 interface NavbarProps {
   currentRole: 'adopter' | 'staff';
@@ -25,147 +31,126 @@ export default function Navbar({
   onSwitchUser,
   onResetDb,
 }: NavbarProps) {
+  const navItems: { id: 'discover' | 'matches' | 'applications' | 'shelter' | 'sqllab'; label: string; count?: number }[] = [
+    { id: 'discover', label: 'Discover' },
+    { id: 'matches', label: 'Matches', count: matchCount },
+    { id: 'applications', label: 'Applications' },
+    { id: 'shelter', label: 'Shelter console', count: pendingAppCount },
+    { id: 'sqllab', label: 'Relational schema' },
+  ];
+
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-rose-100 shadow-xs">
+    <header className="sticky top-0 z-40 w-full bg-[#F3F1EA]/85 backdrop-blur-md border-b border-[#DEDAD1] transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Brand Logo */}
-          <div 
+          
+          {/* Brand Identity / Circular Mark */}
+          <button 
+            type="button"
             onClick={() => onSelectTab('discover')}
-            className="flex items-center space-x-3 cursor-pointer select-none group"
+            aria-label="KinderPets Home"
+            className="flex items-center space-x-2.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] transition-all cursor-pointer"
           >
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white shadow-md shadow-rose-200 group-hover:scale-105 transition-transform">
-              <span className="text-xl">🐾</span>
+            <div className="w-7 h-7 rounded-full bg-[#3E6259] text-white flex items-center justify-center">
+              <ShieldCheck className="w-4 h-4 text-[#F3F1EA] stroke-[2]" />
             </div>
-            <div>
-              <span className="text-xl font-black bg-gradient-to-r from-rose-600 via-pink-600 to-amber-500 bg-clip-text text-transparent">
-                Kinder Pets
+            <div className="flex flex-col">
+              <span className="font-serif text-lg font-medium text-[#14181A] tracking-tight leading-none">
+                KinderPets
               </span>
-              <span className="hidden sm:inline-block ml-2 text-xs px-2 py-0.5 rounded-full bg-rose-50 text-rose-600 font-semibold border border-rose-200">
-                DA2 DBMS
+              <span className="text-[11px] text-[#4B5250] leading-tight">
+                Verified shelter records
               </span>
             </div>
-          </div>
+          </button>
 
-          {/* Navigation Links */}
-          <nav className="flex items-center space-x-1 sm:space-x-2">
-            <button
-              onClick={() => onSelectTab('discover')}
-              className={`px-3 py-2 rounded-xl text-sm font-semibold transition-all flex items-center space-x-1.5 ${
-                activeTab === 'discover'
-                  ? 'bg-rose-500 text-white shadow-sm shadow-rose-200'
-                  : 'text-slate-600 hover:text-rose-600 hover:bg-rose-50/60'
-              }`}
-            >
-              <span>🔥</span>
-              <span className="hidden md:inline">Discover</span>
-            </button>
-
-            <button
-              onClick={() => onSelectTab('matches')}
-              className={`relative px-3 py-2 rounded-xl text-sm font-semibold transition-all flex items-center space-x-1.5 ${
-                activeTab === 'matches'
-                  ? 'bg-rose-500 text-white shadow-sm shadow-rose-200'
-                  : 'text-slate-600 hover:text-rose-600 hover:bg-rose-50/60'
-              }`}
-            >
-              <span>💖</span>
-              <span className="hidden md:inline">Matches</span>
-              {matchCount > 0 && (
-                <span className={`ml-1 text-xs px-1.5 py-0.5 rounded-full font-bold ${
-                  activeTab === 'matches' ? 'bg-white text-rose-600' : 'bg-rose-500 text-white'
-                }`}>
-                  {matchCount}
-                </span>
-              )}
-            </button>
-
-            <button
-              onClick={() => onSelectTab('applications')}
-              className={`relative px-3 py-2 rounded-xl text-sm font-semibold transition-all flex items-center space-x-1.5 ${
-                activeTab === 'applications'
-                  ? 'bg-rose-500 text-white shadow-sm shadow-rose-200'
-                  : 'text-slate-600 hover:text-rose-600 hover:bg-rose-50/60'
-              }`}
-            >
-              <span>📋</span>
-              <span className="hidden md:inline">My Apps</span>
-            </button>
-
-            <button
-              onClick={() => onSelectTab('shelter')}
-              className={`relative px-3 py-2 rounded-xl text-sm font-semibold transition-all flex items-center space-x-1.5 ${
-                activeTab === 'shelter'
-                  ? 'bg-rose-500 text-white shadow-sm shadow-rose-200'
-                  : 'text-slate-600 hover:text-rose-600 hover:bg-rose-50/60'
-              }`}
-            >
-              <span>🏢</span>
-              <span className="hidden md:inline">Shelter Hub</span>
-              {pendingAppCount > 0 && (
-                <span className={`ml-1 text-xs px-1.5 py-0.5 rounded-full font-bold ${
-                  activeTab === 'shelter' ? 'bg-white text-rose-600' : 'bg-amber-500 text-white'
-                }`}>
-                  {pendingAppCount}
-                </span>
-              )}
-            </button>
-
-            <button
-              onClick={() => onSelectTab('sqllab')}
-              className={`px-3 py-2 rounded-xl text-sm font-semibold transition-all flex items-center space-x-1.5 ${
-                activeTab === 'sqllab'
-                  ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-200'
-                  : 'text-indigo-600 bg-indigo-50 hover:bg-indigo-100/70'
-              }`}
-            >
-              <span>⚡</span>
-              <span className="hidden lg:inline">SQL Lab (14 Queries)</span>
-              <span className="lg:hidden">SQL</span>
-            </button>
+          {/* Plain Text Navigation Links with 2px Underline */}
+          <nav 
+            className="flex items-center space-x-6 sm:space-x-8" 
+            aria-label="Main Navigation"
+          >
+            {navItems.map((item) => {
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => onSelectTab(item.id)}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`relative py-5 text-xs font-semibold tracking-tight transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer ${
+                    isActive
+                      ? 'text-[#14181A]'
+                      : 'text-[#4B5250] hover:text-[#14181A]'
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  {item.count !== undefined && item.count > 0 && (
+                    <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-[#3E6259] text-white tabular-nums">
+                      {item.count}
+                    </span>
+                  )}
+                  {isActive && (
+                    <span className="absolute bottom-0 inset-x-0 h-[2px] bg-[#3E6259]" />
+                  )}
+                </button>
+              );
+            })}
           </nav>
 
-          {/* User Switcher & Reset Button */}
-          <div className="flex items-center space-x-2">
-            <div className="relative">
-              <select
-                value={`${currentRole}:${currentRole === 'adopter' ? currentAdopterId : currentStaffId}`}
-                onChange={(e) => {
-                  const [role, idStr] = e.target.value.split(':') as ['adopter' | 'staff', string];
-                  onSwitchUser(role, Number(idStr));
-                }}
-                className="text-xs sm:text-sm font-medium bg-slate-100 hover:bg-slate-200/80 text-slate-800 border border-slate-200 rounded-xl px-2.5 py-1.5 pr-7 focus:outline-none focus:ring-2 focus:ring-rose-400 cursor-pointer transition-colors"
-              >
-                <optgroup label="👤 Adopter Profiles">
-                  <option value="adopter:1">Rahul Sharma (Bangalore)</option>
-                  <option value="adopter:2">Priya Patel (Mumbai)</option>
-                  <option value="adopter:3">Ananya Iyer (Chennai)</option>
-                  <option value="adopter:4">Rohan Kapoor (Delhi)</option>
-                  <option value="adopter:5">Sneha Deshpande (Pune)</option>
-                  <option value="adopter:6">Aditya Verma (Bangalore)</option>
-                </optgroup>
-                <optgroup label="🏢 Shelter Staff">
-                  <option value="staff:1">Dr. Rajesh Rao (Paws & Tails, BLR)</option>
-                  <option value="staff:2">Priya Menon (Paws & Tails, BLR)</option>
-                  <option value="staff:3">Vikram Deshmukh (Compassion, MUM)</option>
-                  <option value="staff:4">Kavita Sundaram (Safe Haven, CHN)</option>
-                  <option value="staff:5">Amit Verma (Tails of Joy, DEL)</option>
-                  <option value="staff:6">Sunita Kulkarni (PAWS, PUN)</option>
-                </optgroup>
-              </select>
+          {/* Persona Switcher & Database Controls */}
+          <div className="flex items-center space-x-2.5">
+            <div className="relative flex items-center">
+              <label htmlFor="user-role-select" className="sr-only">Switch Active Profile</label>
+              <div className="relative">
+                <select
+                  id="user-role-select"
+                  aria-label="Select active user role or staff member"
+                  value={`${currentRole}:${currentRole === 'adopter' ? currentAdopterId : currentStaffId}`}
+                  onChange={(e) => {
+                    const [role, idStr] = e.target.value.split(':') as ['adopter' | 'staff', string];
+                    onSwitchUser(role, Number(idStr));
+                  }}
+                  className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] text-[#14181A] border border-[#DEDAD1] rounded pl-7 pr-7 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer transition-colors"
+                >
+                  <optgroup label="Adopters (Public Registrants)">
+                    <option value="adopter:1">Rahul Sharma • Bengaluru</option>
+                    <option value="adopter:2">Ananya Patel • Mumbai</option>
+                    <option value="adopter:3">Karthik Raman • Chennai</option>
+                    <option value="adopter:4">Sneha Mukherjee • Bengaluru</option>
+                    <option value="adopter:5">Rohan Kapoor • Delhi</option>
+                    <option value="adopter:6">Pooja Nair • Pune</option>
+                  </optgroup>
+                  <optgroup label="Shelter Officers (Caseworkers)">
+                    <option value="staff:1">Dr. Rajesh Rao • Paws & Tails</option>
+                    <option value="staff:2">Priya Menon • Paws & Tails</option>
+                    <option value="staff:3">Vikram Deshmukh • Compassion</option>
+                    <option value="staff:4">Kavita Sundaram • Safe Haven</option>
+                    <option value="staff:5">Amit Verma • Tails of Joy</option>
+                    <option value="staff:6">Sunita Kulkarni • PAWS</option>
+                  </optgroup>
+                </select>
+                <User className="w-3 h-3 text-[#4B5250] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <ChevronDown className="w-3 h-3 text-[#4B5250] absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
             </div>
 
+            {/* Reset Database Trigger */}
             <button
+              type="button"
               onClick={onResetDb}
+              aria-label="Reset database to seed records"
               title="Reset database to initial seed dataset"
-              className="text-xs px-2.5 py-1.5 rounded-xl border border-slate-200 text-slate-500 hover:text-rose-600 hover:border-rose-300 hover:bg-rose-50 transition-colors flex items-center space-x-1"
+              className="px-2.5 py-1.5 rounded bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] text-[#4B5250] hover:text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] transition-colors flex items-center space-x-1 cursor-pointer text-xs font-medium"
             >
-              <span>↺</span>
-              <span className="hidden sm:inline">Reset DB</span>
+              <RotateCcw className="w-3 h-3 text-[#4B5250]" />
+              <span className="hidden sm:inline">Reset</span>
             </button>
           </div>
+
         </div>
       </div>
     </header>
   );
 }
+
+
