@@ -34,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-sans bg-[#F3F1EA] text-[#14181A] selection:bg-[#3E6259] selection:text-white">
+      <body className="min-h-full flex flex-col font-sans bg-[#F3F1EA] text-[#14181A] selection:bg-[#FBBF24] selection:text-[#14181A]">
         {children}
       </body>
     </html>

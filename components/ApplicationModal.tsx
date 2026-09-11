@@ -150,7 +150,7 @@ export default function ApplicationModal({
               min={new Date().toISOString().split('T')[0]}
               value={homeVisitDate}
               onChange={(e) => setHomeVisitDate(e.target.value)}
-              className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259]"
+              className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24]"
             />
             <p className="text-[11px] text-[#4B5250] mt-1">
               A shelter caseworker will conduct a structured home assessment on this date.
@@ -167,7 +167,7 @@ export default function ApplicationModal({
                   id="select-housing-type"
                   value={housingType}
                   onChange={(e) => setHousingType(e.target.value)}
-                  className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] cursor-pointer"
+                  className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24] cursor-pointer"
                 >
                   <option value="Apartment">Apartment</option>
                   <option value="Independent House">Independent House</option>
@@ -187,7 +187,7 @@ export default function ApplicationModal({
                   id="select-has-yard"
                   value={hasYard ? 'Yes' : 'No'}
                   onChange={(e) => setHasYard(e.target.value === 'Yes')}
-                  className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] cursor-pointer"
+                  className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24] cursor-pointer"
                 >
                   <option value="Yes">Yes, secure yard</option>
                   <option value="No">No yard (regular walks)</option>
@@ -207,7 +207,7 @@ export default function ApplicationModal({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Describe previous companion animal experience, household members, or exercise schedule…"
-              className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] leading-relaxed"
+              className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24] leading-relaxed"
             />
           </div>
 
@@ -223,13 +223,13 @@ export default function ApplicationModal({
             <button
               type="submit"
               disabled={submitting}
-              className="px-4 py-2 bg-[#3E6259] hover:bg-[#2E4A43] text-white font-semibold text-xs transition-colors cursor-pointer flex items-center space-x-2"
+              className="px-4 py-2 bg-[#FBBF24] hover:bg-[#F59E0B] text-[#14181A] font-semibold text-xs transition-colors cursor-pointer flex items-center space-x-2"
             >
               {submitting ? (
                 <span>Submitting…</span>
               ) : (
                 <>
-                  <Check className="w-4 h-4 text-white" />
+                  <Check className="w-4 h-4 text-[#14181A]" />
                   <span>Submit application</span>
                 </>
               )}

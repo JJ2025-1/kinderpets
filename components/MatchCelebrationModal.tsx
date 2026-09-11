@@ -45,7 +45,7 @@ export default function MatchCelebrationModal({
         </button>
 
         {/* Status Badge */}
-        <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-sm bg-[#3E6259]/10 border border-[#3E6259]/30 text-[#3E6259] text-[11px] font-semibold mb-4">
+        <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-sm bg-[#FBBF24]/20 border border-[#FBBF24] text-[#B45309] text-[11px] font-semibold mb-4">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Mutual connection</span>
         </div>
@@ -58,7 +58,7 @@ export default function MatchCelebrationModal({
         </p>
 
         {/* Pet Avatar */}
-        <div className="relative mx-auto w-32 h-32 rounded-full p-1 border-2 border-[#3E6259] mb-5">
+        <div className="relative mx-auto w-32 h-32 rounded-full p-1 border-2 border-[#FBBF24] mb-5">
           <div className="w-full h-full rounded-full overflow-hidden bg-[#F3F1EA]">
             <img
               src={pet.primary_photo}
@@ -66,8 +66,8 @@ export default function MatchCelebrationModal({
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[#3E6259] text-white flex items-center justify-center shadow-sm">
-            <Heart className="w-4 h-4 fill-white stroke-[1.5]" />
+          <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[#FBBF24] text-[#14181A] flex items-center justify-center shadow-sm">
+            <Heart className="w-4 h-4 fill-[#14181A] stroke-[1.5]" />
           </div>
         </div>
 
@@ -76,7 +76,7 @@ export default function MatchCelebrationModal({
           <p className="font-serif text-lg font-medium text-[#14181A]">{pet.pet_name}</p>
           <p className="text-[11px] text-[#4B5250] mt-0.5">{pet.species} • {pet.breed_name}</p>
           <div className="flex items-center justify-center space-x-1 text-[#4B5250] mt-1.5 text-[11px]">
-            <MapPin className="w-3 h-3 text-[#3E6259]" />
+            <MapPin className="w-3 h-3 text-[#B45309]" />
             <span>{pet.shelter_name} ({pet.shelter_city})</span>
           </div>
         </div>
@@ -90,7 +90,7 @@ export default function MatchCelebrationModal({
               onApply(pet);
             }}
             aria-label={`Submit adoption application for ${pet.pet_name}`}
-            className="w-full py-2.5 px-4 bg-[#3E6259] hover:bg-[#2E4A43] text-white font-semibold text-xs transition-colors flex items-center justify-center space-x-2 cursor-pointer"
+            className="w-full py-2.5 px-4 bg-[#FBBF24] hover:bg-[#F59E0B] text-[#14181A] font-semibold text-xs transition-colors flex items-center justify-center space-x-2 cursor-pointer"
           >
             <span>Start adoption application</span>
             <ArrowRight className="w-3.5 h-3.5" />

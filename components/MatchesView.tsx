@@ -76,7 +76,7 @@ export default function MatchesView({
                 type="button"
                 aria-label={`View record for ${match.pet.pet_name}`}
                 onClick={() => onViewPet(match.pet)}
-                className="relative aspect-[16/10] w-full text-left bg-[#14181A] overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer"
+                className="relative aspect-[16/10] w-full text-left bg-[#14181A] overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] cursor-pointer"
               >
                 <img
                   src={match.pet.primary_photo}
@@ -91,7 +91,7 @@ export default function MatchesView({
                     className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
                       match.has_application
                         ? 'bg-[#B98A34] text-white'
-                        : 'bg-[#3E6259] text-white'
+                        : 'bg-[#FBBF24] text-[#14181A]'
                     }`}
                   >
                     {match.has_application ? 'Application active' : 'Ready to apply'}
@@ -105,7 +105,7 @@ export default function MatchesView({
                   <button
                     type="button"
                     onClick={() => onViewPet(match.pet)}
-                    className="text-left font-serif text-2xl font-medium text-[#14181A] hover:text-[#3E6259] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer transition-colors"
+                    className="text-left font-serif text-2xl font-medium text-[#14181A] hover:text-[#B45309] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] cursor-pointer transition-colors"
                   >
                     {match.pet.pet_name}
                   </button>
@@ -119,7 +119,7 @@ export default function MatchesView({
                 </p>
 
                 {match.pet.behaviour_desc && (
-                  <p className="font-serif italic text-xs text-[#14181A] border-l-2 border-[#3E6259] pl-3 py-0.5 leading-relaxed">
+                  <p className="font-serif italic text-xs text-[#14181A] border-l-2 border-[#FBBF24] pl-3 py-0.5 leading-relaxed">
                     "{match.pet.behaviour_desc}"
                   </p>
                 )}
@@ -148,7 +148,7 @@ export default function MatchesView({
                   type="button"
                   onClick={() => onApply(match.pet, match.match_id)}
                   aria-label={`Start adoption application for ${match.pet.pet_name}`}
-                  className="w-full py-2 px-3 rounded bg-[#3E6259] hover:bg-[#2E4A43] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] text-white font-semibold text-xs transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
+                  className="w-full py-2 px-3 rounded bg-[#FBBF24] hover:bg-[#F59E0B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] text-[#14181A] font-semibold text-xs transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
                 >
                   <span>Start adoption application</span>
                   <ArrowRight className="w-3.5 h-3.5" />

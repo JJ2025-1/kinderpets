@@ -92,7 +92,7 @@ export default function PetDetailModal({
                     type="button"
                     onClick={() => setActivePhotoIdx(idx)}
                     aria-label={`Photo ${idx + 1}`}
-                    className={`w-10 h-10 overflow-hidden border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] transition-opacity shrink-0 cursor-pointer ${
+                    className={`w-10 h-10 overflow-hidden border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] transition-opacity shrink-0 cursor-pointer ${
                       activePhotoIdx === idx ? 'border-white opacity-100' : 'border-white/20 opacity-50 hover:opacity-80'
                     }`}
                   >
@@ -124,15 +124,15 @@ export default function PetDetailModal({
                 </span>
                 <div className="space-y-1.5 text-xs text-[#4B5250]">
                   <div className="flex items-center space-x-2">
-                    <Check className="w-3.5 h-3.5 text-[#3E6259] stroke-[2.5]" />
+                    <Check className="w-3.5 h-3.5 text-[#B45309] stroke-[2.5]" />
                     <span>Vaccinated — Confirmed by veterinarian</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Check className="w-3.5 h-3.5 text-[#3E6259] stroke-[2.5]" />
+                    <Check className="w-3.5 h-3.5 text-[#B45309] stroke-[2.5]" />
                     <span>Neutered / Spayed — Confirmed</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Check className="w-3.5 h-3.5 text-[#3E6259] stroke-[2.5]" />
+                    <Check className="w-3.5 h-3.5 text-[#B45309] stroke-[2.5]" />
                     <span>Microchipped — Registered in sanctuary database</span>
                   </div>
                 </div>
@@ -144,7 +144,7 @@ export default function PetDetailModal({
                   <span className="text-xs font-semibold text-[#14181A] block">
                     Temperament & Behaviour
                   </span>
-                  <p className="font-serif italic text-xs text-[#14181A] border-l-2 border-[#3E6259] pl-3 py-0.5 leading-relaxed">
+                  <p className="font-serif italic text-xs text-[#14181A] border-l-2 border-[#FBBF24] pl-3 py-0.5 leading-relaxed">
                     "{pet.behaviour_desc}"
                   </p>
                 </div>
@@ -195,7 +195,7 @@ export default function PetDetailModal({
                       if (onApply) onApply(pet);
                     }}
                     aria-label={`Start adoption application for ${pet.pet_name}`}
-                    className="px-4 py-2 rounded bg-[#3E6259] hover:bg-[#2E4A43] text-white text-xs font-semibold transition-colors flex items-center space-x-1.5 cursor-pointer"
+                    className="px-4 py-2 rounded bg-[#FBBF24] hover:bg-[#F59E0B] text-[#14181A] text-xs font-semibold transition-colors flex items-center space-x-1.5 cursor-pointer"
                   >
                     <span>Start adoption application</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -210,9 +210,9 @@ export default function PetDetailModal({
                           onSwipeRight(pet.pet_id);
                         }}
                         aria-label={`Express interest in ${pet.pet_name}`}
-                        className="px-4 py-2 rounded bg-[#3E6259] hover:bg-[#2E4A43] text-white text-xs font-semibold transition-colors flex items-center space-x-1.5 cursor-pointer"
+                        className="px-4 py-2 rounded bg-[#FBBF24] hover:bg-[#F59E0B] text-[#14181A] text-xs font-semibold transition-colors flex items-center space-x-1.5 cursor-pointer"
                       >
-                        <Heart className="w-3.5 h-3.5 fill-white text-white" />
+                        <Heart className="w-3.5 h-3.5 fill-[#14181A] text-[#14181A]" />
                         <span>Express interest</span>
                       </button>
                     )}

@@ -159,8 +159,8 @@ export default function ShelterDashboard({
       <div className="bg-[#FFFFFF] border border-[#DEDAD1] p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-full bg-[#3E6259] text-white flex items-center justify-center">
-              <ShieldCheck className="w-4 h-4 text-[#F3F1EA] stroke-[2]" />
+            <div className="w-8 h-8 rounded-full bg-[#FBBF24] text-[#14181A] flex items-center justify-center">
+              <ShieldCheck className="w-4 h-4 text-[#14181A] stroke-[2]" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
@@ -184,7 +184,7 @@ export default function ShelterDashboard({
             type="button"
             onClick={() => setShowAddPetModal(true)}
             aria-label="Register new animal"
-            className="px-3.5 py-2 rounded bg-[#3E6259] hover:bg-[#2E4A43] text-white font-semibold text-xs transition-colors flex items-center space-x-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded bg-[#FBBF24] hover:bg-[#F59E0B] text-[#14181A] font-semibold text-xs transition-colors flex items-center space-x-1.5 cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Register companion</span>
@@ -222,7 +222,7 @@ export default function ShelterDashboard({
             {applications.length}
           </span>
           {activeSubTab === 'applications' && (
-            <span className="absolute bottom-0 inset-x-0 h-[2px] bg-[#3E6259]" />
+            <span className="absolute bottom-0 inset-x-0 h-[2px] bg-[#FBBF24]" />
           )}
         </button>
 
@@ -243,7 +243,7 @@ export default function ShelterDashboard({
             {pets.length}
           </span>
           {activeSubTab === 'pets' && (
-            <span className="absolute bottom-0 inset-x-0 h-[2px] bg-[#3E6259]" />
+            <span className="absolute bottom-0 inset-x-0 h-[2px] bg-[#FBBF24]" />
           )}
         </button>
       </div>
@@ -290,7 +290,7 @@ export default function ShelterDashboard({
                       <span
                         className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-sm border ${
                           app.application_status === 'Approved'
-                            ? 'bg-[#3E6259]/10 text-[#3E6259] border-[#3E6259]/30'
+                            ? 'bg-[#FBBF24]/20 text-[#B45309] border-[#FBBF24]'
                             : app.application_status === 'Rejected'
                             ? 'bg-[#A2453A]/10 text-[#A2453A] border-[#A2453A]/30'
                             : 'bg-[#B98A34]/10 text-[#B98A34] border-[#B98A34]/30'
@@ -319,7 +319,7 @@ export default function ShelterDashboard({
                 {/* Middle: Adopter Credentials */}
                 <div className="bg-[#F3F1EA] p-4 border border-[#DEDAD1] text-xs space-y-1.5 min-w-[280px]">
                   <div className="flex items-center space-x-1.5 font-semibold text-[#14181A]">
-                    <User className="w-3.5 h-3.5 text-[#3E6259]" />
+                    <User className="w-3.5 h-3.5 text-[#B45309]" />
                     <span>Applicant: {app.adopter.full_name}</span>
                   </div>
                   <div className="flex items-center space-x-1.5 text-[#4B5250] text-[11px]">
@@ -334,7 +334,7 @@ export default function ShelterDashboard({
                     <span>{app.adopter.city}, {app.adopter.state}</span>
                   </div>
                   <div className="flex items-center space-x-1.5 text-[#14181A] font-medium pt-1.5 border-t border-[#DEDAD1] text-[11px]">
-                    <Calendar className="w-3.5 h-3.5 text-[#3E6259]" />
+                    <Calendar className="w-3.5 h-3.5 text-[#B45309]" />
                     <span>Home Visit: {app.home_visit_date}</span>
                   </div>
                 </div>
@@ -348,7 +348,7 @@ export default function ShelterDashboard({
                         onClick={() => handleDecision(app.application_id, 'Approved')}
                         disabled={actionLoading === app.application_id}
                         aria-label={`Approve application ${app.application_id}`}
-                        className="w-full sm:w-auto px-4 py-2 bg-[#3E6259] hover:bg-[#2E4A43] focus-visible:outline-none text-white text-xs font-semibold transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
+                        className="w-full sm:w-auto px-4 py-2 bg-[#FBBF24] hover:bg-[#F59E0B] focus-visible:outline-none text-[#14181A] text-xs font-semibold transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
                       >
                         <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                         <span>Approve</span>
@@ -419,7 +419,7 @@ export default function ShelterDashboard({
                       <span
                         className={`px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-sm border ${
                           p.status === 'Available'
-                            ? 'bg-[#3E6259]/10 text-[#3E6259] border-[#3E6259]/30'
+                            ? 'bg-[#FBBF24]/20 text-[#B45309] border-[#FBBF24]'
                             : p.status === 'Adopted'
                             ? 'bg-[#14181A] text-[#F3F1EA] border-[#14181A]'
                             : 'bg-[#B98A34]/10 text-[#B98A34] border-[#B98A34]/30'
@@ -474,7 +474,7 @@ export default function ShelterDashboard({
                     placeholder="e.g. Leo"
                     value={newPetName}
                     onChange={(e) => setNewPetName(e.target.value)}
-                    className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259]"
+                    className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24]"
                   />
                 </div>
 
@@ -487,7 +487,7 @@ export default function ShelterDashboard({
                       id="new-pet-breed"
                       value={newPetBreed}
                       onChange={(e) => setNewPetBreed(e.target.value)}
-                      className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] cursor-pointer"
+                      className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24] cursor-pointer"
                     >
                       {breeds.map((b) => (
                         <option key={b.breed_name} value={b.breed_name}>
@@ -510,7 +510,7 @@ export default function ShelterDashboard({
                       id="new-pet-gender"
                       value={newPetGender}
                       onChange={(e) => setNewPetGender(e.target.value as any)}
-                      className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] cursor-pointer"
+                      className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24] cursor-pointer"
                     >
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -531,7 +531,7 @@ export default function ShelterDashboard({
                     required
                     value={newPetAgeMonths}
                     onChange={(e) => setNewPetAgeMonths(Number(e.target.value))}
-                    className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259]"
+                    className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24]"
                   />
                 </div>
 
@@ -544,7 +544,7 @@ export default function ShelterDashboard({
                       id="new-pet-size"
                       value={newPetSize}
                       onChange={(e) => setNewPetSize(e.target.value as any)}
-                      className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] cursor-pointer"
+                      className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24] cursor-pointer"
                     >
                       <option value="Small">Small</option>
                       <option value="Medium">Medium</option>
@@ -565,7 +565,7 @@ export default function ShelterDashboard({
                     id="new-pet-shelter"
                     value={newPetShelterId}
                     onChange={(e) => setNewPetShelterId(Number(e.target.value))}
-                    className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] cursor-pointer"
+                    className="w-full appearance-none px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24] cursor-pointer"
                   >
                     {shelters.map((s) => (
                       <option key={s.shelter_id} value={s.shelter_id}>
@@ -587,7 +587,7 @@ export default function ShelterDashboard({
                   placeholder="https://images.unsplash.com/…"
                   value={newPetPhotoUrl}
                   onChange={(e) => setNewPetPhotoUrl(e.target.value)}
-                  className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259]"
+                  className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24]"
                 />
               </div>
 
@@ -601,7 +601,7 @@ export default function ShelterDashboard({
                   value={newPetBehaviour}
                   onChange={(e) => setNewPetBehaviour(e.target.value)}
                   placeholder="e.g. Playful, friendly with other animals, loves gentle treats"
-                  className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] leading-relaxed"
+                  className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24] leading-relaxed"
                 />
               </div>
 
@@ -615,7 +615,7 @@ export default function ShelterDashboard({
                   value={newPetLifestyle}
                   onChange={(e) => setNewPetLifestyle(e.target.value)}
                   placeholder="e.g. Apartment friendly, needs regular daily walks"
-                  className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#3E6259] leading-relaxed"
+                  className="w-full px-3 py-2 border border-[#DEDAD1] text-xs font-normal text-[#14181A] bg-[#FFFFFF] focus-visible:outline-none focus-visible:border-[#FBBF24] leading-relaxed"
                 />
               </div>
 
@@ -630,13 +630,13 @@ export default function ShelterDashboard({
                 <button
                   type="submit"
                   disabled={addPetSubmitting}
-                  className="px-4 py-2 bg-[#3E6259] hover:bg-[#2E4A43] text-white font-semibold text-xs transition-colors cursor-pointer flex items-center space-x-2"
+                  className="px-4 py-2 bg-[#FBBF24] hover:bg-[#F59E0B] text-[#14181A] font-semibold text-xs transition-colors cursor-pointer flex items-center space-x-2"
                 >
                   {addPetSubmitting ? (
                     <span>Registering…</span>
                   ) : (
                     <>
-                      <Check className="w-4 h-4 text-white" />
+                      <Check className="w-4 h-4 text-[#14181A]" />
                       <span>Register companion</span>
                     </>
                   )}

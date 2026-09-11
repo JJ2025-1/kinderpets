@@ -80,7 +80,7 @@ export default function SqlLab() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
-              <span className="text-[11px] font-semibold text-[#3E6259]">
+              <span className="text-[11px] font-semibold text-[#B45309]">
                 Relational workbench
               </span>
               <span className="text-[#DEDAD1] text-xs">•</span>
@@ -104,7 +104,7 @@ export default function SqlLab() {
               onClick={() => setActiveTab('queries')}
               className={`px-4 py-2 text-xs font-semibold transition-colors cursor-pointer ${
                 activeTab === 'queries'
-                  ? 'bg-[#3E6259] text-white'
+                  ? 'bg-[#FBBF24] text-[#14181A]'
                   : 'text-[#4B5250] hover:text-[#14181A]'
               }`}
             >
@@ -117,7 +117,7 @@ export default function SqlLab() {
               onClick={() => setActiveTab('plsql')}
               className={`px-4 py-2 text-xs font-semibold transition-colors cursor-pointer ${
                 activeTab === 'plsql'
-                  ? 'bg-[#3E6259] text-white'
+                  ? 'bg-[#FBBF24] text-[#14181A]'
                   : 'text-[#4B5250] hover:text-[#14181A]'
               }`}
             >
@@ -153,7 +153,7 @@ export default function SqlLab() {
                     aria-pressed={isSelected}
                     className={`w-full text-left p-3 text-xs transition-colors flex flex-col cursor-pointer border ${
                       isSelected
-                        ? 'bg-[#F3F1EA] border-[#3E6259] text-[#14181A]'
+                        ? 'bg-[#F3F1EA] border-[#FBBF24] text-[#14181A]'
                         : 'bg-[#FFFFFF] border-[#DEDAD1] hover:border-[#4B5250] text-[#4B5250]'
                     }`}
                   >
@@ -162,7 +162,7 @@ export default function SqlLab() {
                         {q.title}
                       </span>
                       <span className={`text-[10px] px-1.5 py-0.5 font-medium border ${
-                        isSelected ? 'bg-[#3E6259]/10 text-[#3E6259] border-[#3E6259]/30' : 'bg-[#F3F1EA] text-[#4B5250] border-[#DEDAD1]'
+                        isSelected ? 'bg-[#FBBF24]/20 text-[#B45309] border-[#FBBF24]' : 'bg-[#F3F1EA] text-[#4B5250] border-[#DEDAD1]'
                       }`}>
                         {q.category}
                       </span>
@@ -190,7 +190,7 @@ export default function SqlLab() {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] uppercase font-semibold text-[#3E6259] bg-[#3E6259]/10 border border-[#3E6259]/30 px-2 py-0.5">
+                        <span className="text-[10px] uppercase font-semibold text-[#B45309] bg-[#FBBF24]/20 border border-[#FBBF24] px-2 py-0.5">
                           Active query
                         </span>
                         <span className="text-xs text-[#4B5250]">
@@ -212,7 +212,7 @@ export default function SqlLab() {
                         aria-label="Copy SQL query"
                         className="px-3 py-2 border border-[#DEDAD1] bg-[#FFFFFF] hover:bg-[#F3F1EA] text-[#4B5250] hover:text-[#14181A] text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
                       >
-                        {copied ? <Check className="w-3.5 h-3.5 text-[#3E6259]" /> : <Copy className="w-3.5 h-3.5 text-[#4B5250]" />}
+                        {copied ? <Check className="w-3.5 h-3.5 text-[#B45309]" /> : <Copy className="w-3.5 h-3.5 text-[#4B5250]" />}
                         <span>{copied ? 'Copied' : 'Copy'}</span>
                       </button>
 
@@ -220,9 +220,9 @@ export default function SqlLab() {
                         type="button"
                         onClick={() => fetchQuery(selectedQueryId)}
                         aria-label="Re-execute SQL query"
-                        className="px-4 py-2 bg-[#3E6259] hover:bg-[#2E4A43] text-white text-xs font-semibold transition-colors flex items-center gap-2 cursor-pointer"
+                        className="px-4 py-2 bg-[#FBBF24] hover:bg-[#F59E0B] text-[#14181A] text-xs font-semibold transition-colors flex items-center gap-2 cursor-pointer"
                       >
-                        <Play className="w-3.5 h-3.5 fill-white" />
+                        <Play className="w-3.5 h-3.5 fill-[#14181A]" />
                         <span>Run query</span>
                       </button>
                     </div>
@@ -306,7 +306,7 @@ export default function SqlLab() {
             {/* Procedures Card */}
             <div className="bg-[#FFFFFF] border border-[#DEDAD1] p-6 space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
-                <div className="w-9 h-9 bg-[#F3F1EA] border border-[#DEDAD1] flex items-center justify-center text-[#3E6259]">
+                <div className="w-9 h-9 bg-[#F3F1EA] border border-[#DEDAD1] flex items-center justify-center text-[#B45309]">
                   <Code2 className="w-4 h-4" />
                 </div>
                 <h3 className="font-serif text-lg font-medium text-[#14181A]">Stored procedures</h3>
@@ -338,14 +338,14 @@ export default function SqlLab() {
               </div>
               <div className="pt-3 border-t border-[#DEDAD1] flex items-center justify-between text-xs text-[#4B5250]">
                 <span>5 procedures</span>
-                <span className="text-[#3E6259] font-semibold">100% Tested</span>
+                <span className="text-[#B45309] font-semibold">100% Tested</span>
               </div>
             </div>
 
             {/* Functions Card */}
             <div className="bg-[#FFFFFF] border border-[#DEDAD1] p-6 space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
-                <div className="w-9 h-9 bg-[#F3F1EA] border border-[#DEDAD1] flex items-center justify-center text-[#3E6259]">
+                <div className="w-9 h-9 bg-[#F3F1EA] border border-[#DEDAD1] flex items-center justify-center text-[#B45309]">
                   <Cpu className="w-4 h-4" />
                 </div>
                 <h3 className="font-serif text-lg font-medium text-[#14181A]">Deterministic functions</h3>
@@ -369,14 +369,14 @@ export default function SqlLab() {
               </div>
               <div className="pt-3 border-t border-[#DEDAD1] flex items-center justify-between text-xs text-[#4B5250]">
                 <span>3 functions</span>
-                <span className="text-[#3E6259] font-semibold">Deterministic</span>
+                <span className="text-[#B45309] font-semibold">Deterministic</span>
               </div>
             </div>
 
             {/* Triggers Card */}
             <div className="bg-[#FFFFFF] border border-[#DEDAD1] p-6 space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
-                <div className="w-9 h-9 bg-[#F3F1EA] border border-[#DEDAD1] flex items-center justify-center text-[#3E6259]">
+                <div className="w-9 h-9 bg-[#F3F1EA] border border-[#DEDAD1] flex items-center justify-center text-[#B45309]">
                   <GitBranch className="w-4 h-4" />
                 </div>
                 <h3 className="font-serif text-lg font-medium text-[#14181A]">Database triggers</h3>
@@ -385,33 +385,33 @@ export default function SqlLab() {
                 </p>
                 <div className="space-y-2 pt-2">
                   <div className="p-3 bg-[#F3F1EA] border border-[#DEDAD1] text-xs">
-                    <span className="font-mono font-semibold text-[#3E6259]">trg_prevent_invalid_pet_status</span>
+                    <span className="font-mono font-semibold text-[#B45309]">trg_prevent_invalid_pet_status</span>
                     <span className="block text-[11px] text-[#4B5250] mt-0.5">Rejects illegal Available → Adopted jumps</span>
                   </div>
                   <div className="p-3 bg-[#F3F1EA] border border-[#DEDAD1] text-xs">
-                    <span className="font-mono font-semibold text-[#3E6259]">trg_decision_update_pet_status</span>
+                    <span className="font-mono font-semibold text-[#B45309]">trg_decision_update_pet_status</span>
                     <span className="block text-[11px] text-[#4B5250] mt-0.5">Cascades SHELTER_DECISION to PET status</span>
                   </div>
                   <div className="p-3 bg-[#F3F1EA] border border-[#DEDAD1] text-xs">
-                    <span className="font-mono font-semibold text-[#3E6259]">trg_prevent_duplicate_application</span>
+                    <span className="font-mono font-semibold text-[#B45309]">trg_prevent_duplicate_application</span>
                     <span className="block text-[11px] text-[#4B5250] mt-0.5">Enforces single active application per pet/adopter</span>
                   </div>
                   <div className="p-3 bg-[#F3F1EA] border border-[#DEDAD1] text-xs">
-                    <span className="font-mono font-semibold text-[#3E6259]">trg_single_primary_photo</span>
+                    <span className="font-mono font-semibold text-[#B45309]">trg_single_primary_photo</span>
                     <span className="block text-[11px] text-[#4B5250] mt-0.5">Maintains strictly 1 primary hero photo</span>
                   </div>
                 </div>
               </div>
               <div className="pt-3 border-t border-[#DEDAD1] flex items-center justify-between text-xs text-[#4B5250]">
                 <span>4 triggers</span>
-                <span className="text-[#3E6259] font-semibold">Active enforcement</span>
+                <span className="text-[#B45309] font-semibold">Active enforcement</span>
               </div>
             </div>
           </div>
 
           <div className="p-4 bg-[#FFFFFF] border border-[#DEDAD1] text-xs text-[#4B5250] flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="flex items-center space-x-2">
-              <ShieldCheck className="w-4 h-4 text-[#3E6259]" />
+              <ShieldCheck className="w-4 h-4 text-[#B45309]" />
               <span>Full Oracle & SQLite scripts available in repository:</span>
             </div>
             <code className="text-[#14181A] font-mono bg-[#F3F1EA] px-3 py-1 border border-[#DEDAD1] font-semibold text-[11px]">
