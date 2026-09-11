@@ -122,7 +122,7 @@ export default function SwipeDeck({
     return (
       <div className="max-w-md mx-auto my-12 px-4">
         <div className="p-8 sm:p-10 text-center bg-[#FFFFFF] border border-[#DEDAD1]">
-          <div className="w-12 h-12 rounded-full bg-[#F3F1EA] border border-[#DEDAD1] flex items-center justify-center mx-auto mb-4 text-[#3E6259]">
+          <div className="w-12 h-12 rounded-full bg-[#F3F1EA] border border-[#DEDAD1] flex items-center justify-center mx-auto mb-4 text-[#B45309]">
             <CheckCircle2 className="w-6 h-6 stroke-[1.75]" />
           </div>
           <h3 className="font-serif text-3xl font-medium tracking-tight text-[#14181A] mb-2">
@@ -138,7 +138,7 @@ export default function SwipeDeck({
               onResetSwipes();
             }}
             aria-label="Restart companion discovery queue"
-            className="px-4 py-2 bg-[#3E6259] hover:bg-[#2E4A43] text-white font-semibold text-xs transition-colors flex items-center justify-center space-x-2 cursor-pointer mx-auto"
+            className="px-4 py-2 bg-[#FBBF24] hover:bg-[#F59E0B] text-[#14181A] font-semibold text-xs transition-colors flex items-center justify-center space-x-2 cursor-pointer mx-auto"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Restart discovery</span>
@@ -263,7 +263,7 @@ export default function SwipeDeck({
           {/* Dynamic Drag Stamp Badges */}
           <div 
             style={{ opacity: likeOpacity }}
-            className="absolute top-10 left-6 border-2 border-[#3E6259] bg-[#3E6259] text-white font-bold text-base px-4 py-1 rotate-[-10deg] tracking-wider uppercase pointer-events-none z-30 transition-opacity"
+            className="absolute top-10 left-6 border-2 border-[#FBBF24] bg-[#FBBF24] text-[#14181A] font-bold text-base px-4 py-1 rotate-[-10deg] tracking-wider uppercase pointer-events-none z-30 transition-opacity"
           >
             CONNECT
           </div>
@@ -277,11 +277,11 @@ export default function SwipeDeck({
           {/* Top Status Indicators */}
           <div className="absolute top-6 left-4 right-4 flex items-center justify-between pointer-events-none z-20">
             <div className="bg-[#14181A]/80 backdrop-blur-md text-white px-2.5 py-1 text-[11px] flex items-center space-x-1.5 border border-white/10">
-              <MapPin className="w-3 h-3 text-[#3E6259]" />
+              <MapPin className="w-3 h-3 text-[#FBBF24]" />
               <span>{currentPet.approx_distance_km} km away</span>
             </div>
             <div className="bg-[#14181A]/80 backdrop-blur-md border border-white/20 text-white px-2.5 py-1 text-[11px] flex items-center gap-1">
-              <ShieldCheck className="w-3 h-3 text-[#3E6259]" />
+              <ShieldCheck className="w-3 h-3 text-[#FBBF24]" />
               <span>Verified shelter</span>
             </div>
           </div>
@@ -312,7 +312,7 @@ export default function SwipeDeck({
 
             {/* Behaviour Quotation */}
             {currentPet.behaviour_desc && (
-              <p className="text-xs text-[#DEDAD1] line-clamp-2 leading-relaxed mb-3 italic border-l-2 border-[#3E6259] pl-2.5">
+              <p className="text-xs text-[#DEDAD1] line-clamp-2 leading-relaxed mb-3 italic border-l-2 border-[#FBBF24] pl-2.5">
                 "{currentPet.behaviour_desc}"
               </p>
             )}
@@ -362,10 +362,10 @@ export default function SwipeDeck({
           onClick={() => handleSwipe('RIGHT')}
           disabled={swipeDirection !== null}
           aria-label={`Express interest in ${currentPet.pet_name}`}
-          className="w-12 h-12 rounded-full bg-[#3E6259] hover:bg-[#2E4A43] text-white transition-colors flex items-center justify-center cursor-pointer shadow-xs"
+          className="w-12 h-12 rounded-full bg-[#FBBF24] hover:bg-[#F59E0B] text-[#14181A] transition-colors flex items-center justify-center cursor-pointer shadow-xs"
           title="Connect / Express Interest (Right arrow)"
         >
-          <Heart className="w-5 h-5 fill-white stroke-[1.5]" />
+          <Heart className="w-5 h-5 fill-[#14181A] stroke-[1.5]" />
         </button>
       </div>
     </div>

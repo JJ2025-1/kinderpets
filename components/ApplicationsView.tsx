@@ -95,7 +95,7 @@ export default function ApplicationsView({
                     <span
                       className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${
                         app.application_status === 'Approved'
-                          ? 'bg-[#3E6259] text-white'
+                          ? 'bg-[#FBBF24] text-[#14181A]'
                           : app.application_status === 'Rejected'
                           ? 'bg-[#A2453A] text-white'
                           : 'bg-[#B98A34] text-white'
@@ -124,7 +124,7 @@ export default function ApplicationsView({
               {/* Status Timeline / Details */}
               <div className="bg-[#F3F1EA] p-3.5 border border-[#DEDAD1] text-xs space-y-1 min-w-[280px]">
                 <div className="flex items-center space-x-2 text-[#14181A]">
-                  <Calendar className="w-3.5 h-3.5 text-[#3E6259] shrink-0" />
+                  <Calendar className="w-3.5 h-3.5 text-[#B45309] shrink-0" />
                   <span>Scheduled home assessment:</span>
                   <b className="font-medium">{app.home_visit_date}</b>
                 </div>
@@ -137,7 +137,7 @@ export default function ApplicationsView({
 
                 {app.staff && (
                   <div className="flex items-center space-x-2 text-[#14181A] pt-1 border-t border-[#DEDAD1] text-[11px]">
-                    <User className="w-3.5 h-3.5 text-[#3E6259] shrink-0" />
+                    <User className="w-3.5 h-3.5 text-[#B45309] shrink-0" />
                     <span>Reviewer: {app.staff.staff_name} ({app.staff.role})</span>
                   </div>
                 )}
@@ -146,8 +146,8 @@ export default function ApplicationsView({
               {/* Resolution Status Banner */}
               <div className="text-right shrink-0 min-w-[200px]">
                 {app.application_status === 'Approved' ? (
-                  <div className="p-3 bg-[#FFFFFF] border border-[#3E6259] text-[#14181A] text-xs text-left sm:text-center space-y-0.5">
-                    <div className="flex items-center sm:justify-center space-x-1 text-[#3E6259] font-semibold">
+                  <div className="p-3 bg-[#FFFFFF] border border-[#FBBF24] text-[#14181A] text-xs text-left sm:text-center space-y-0.5">
+                    <div className="flex items-center sm:justify-center space-x-1 text-[#B45309] font-semibold">
                       <Check className="w-4 h-4 stroke-[2.5]" />
                       <span>Approved</span>
                     </div>

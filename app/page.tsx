@@ -242,7 +242,7 @@ export default function HomePage() {
   ).length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F3F1EA] text-[#14181A] selection:bg-[#3E6259] selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#F3F1EA] text-[#14181A] selection:bg-[#FBBF24] selection:text-[#14181A]">
       {/* Top Header Navbar */}
       <Navbar
         currentRole={currentRole}

@@ -49,10 +49,10 @@ export default function Navbar({
             type="button"
             onClick={() => onSelectTab('discover')}
             aria-label="KinderPets Home"
-            className="flex items-center space-x-2.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] transition-all cursor-pointer"
+            className="flex items-center space-x-2.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] transition-all cursor-pointer"
           >
-            <div className="w-7 h-7 rounded-full bg-[#3E6259] text-white flex items-center justify-center">
-              <ShieldCheck className="w-4 h-4 text-[#F3F1EA] stroke-[2]" />
+            <div className="w-7 h-7 rounded-full bg-[#FBBF24] text-[#14181A] flex items-center justify-center">
+              <ShieldCheck className="w-4 h-4 text-[#14181A] stroke-[2]" />
             </div>
             <div className="flex flex-col">
               <span className="font-serif text-lg font-medium text-[#14181A] tracking-tight leading-none">
@@ -77,7 +77,7 @@ export default function Navbar({
                   type="button"
                   onClick={() => onSelectTab(item.id)}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`relative py-5 text-xs font-semibold tracking-tight transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer ${
+                  className={`relative py-5 text-xs font-semibold tracking-tight transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] cursor-pointer ${
                     isActive
                       ? 'text-[#14181A]'
                       : 'text-[#4B5250] hover:text-[#14181A]'
@@ -85,12 +85,12 @@ export default function Navbar({
                 >
                   <span>{item.label}</span>
                   {item.count !== undefined && item.count > 0 && (
-                    <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-[#3E6259] text-white tabular-nums">
+                    <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-[#FBBF24] text-[#14181A] tabular-nums">
                       {item.count}
                     </span>
                   )}
                   {isActive && (
-                    <span className="absolute bottom-0 inset-x-0 h-[2px] bg-[#3E6259]" />
+                    <span className="absolute bottom-0 inset-x-0 h-[2px] bg-[#FBBF24]" />
                   )}
                 </button>
               );
@@ -110,7 +110,7 @@ export default function Navbar({
                     const [role, idStr] = e.target.value.split(':') as ['adopter' | 'staff', string];
                     onSwitchUser(role, Number(idStr));
                   }}
-                  className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] text-[#14181A] border border-[#DEDAD1] rounded pl-7 pr-7 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer transition-colors"
+                  className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] text-[#14181A] border border-[#DEDAD1] rounded pl-7 pr-7 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] cursor-pointer transition-colors"
                 >
                   <optgroup label="Adopters (Public Registrants)">
                     <option value="adopter:1">Rahul Sharma • Bengaluru</option>
@@ -140,7 +140,7 @@ export default function Navbar({
               onClick={onResetDb}
               aria-label="Reset database to seed records"
               title="Reset database to initial seed dataset"
-              className="px-2.5 py-1.5 rounded bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] text-[#4B5250] hover:text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] transition-colors flex items-center space-x-1 cursor-pointer text-xs font-medium"
+              className="px-2.5 py-1.5 rounded bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] text-[#4B5250] hover:text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] transition-colors flex items-center space-x-1 cursor-pointer text-xs font-medium"
             >
               <RotateCcw className="w-3 h-3 text-[#4B5250]" />
               <span className="hidden sm:inline">Reset</span>

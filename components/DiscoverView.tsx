@@ -141,7 +141,7 @@ export default function DiscoverView({
               aria-pressed={viewMode === 'grid'}
               className={`px-3 py-1.5 rounded text-xs font-semibold tracking-tight transition-colors flex items-center space-x-1.5 cursor-pointer ${
                 viewMode === 'grid'
-                  ? 'bg-[#3E6259] text-white'
+                  ? 'bg-[#FBBF24] text-[#14181A]'
                   : 'text-[#4B5250] hover:text-[#14181A]'
               }`}
             >
@@ -156,7 +156,7 @@ export default function DiscoverView({
               aria-pressed={viewMode === 'deck'}
               className={`px-3 py-1.5 rounded text-xs font-semibold tracking-tight transition-colors flex items-center space-x-1.5 cursor-pointer ${
                 viewMode === 'deck'
-                  ? 'bg-[#3E6259] text-white'
+                  ? 'bg-[#FBBF24] text-[#14181A]'
                   : 'text-[#4B5250] hover:text-[#14181A]'
               }`}
             >
@@ -181,7 +181,7 @@ export default function DiscoverView({
               onClick={() => handleSpeciesChange(s)}
               className={`px-3 py-1.5 rounded text-xs font-semibold transition-colors cursor-pointer ${
                 speciesFilter === s
-                  ? 'bg-[#3E6259] text-white'
+                  ? 'bg-[#FBBF24] text-[#14181A]'
                   : 'text-[#4B5250] hover:text-[#14181A]'
               }`}
             >
@@ -198,7 +198,7 @@ export default function DiscoverView({
             placeholder="Search by name, breed, or shelter…"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#FFFFFF] border border-[#DEDAD1] rounded pl-9 pr-3 py-1.5 text-xs text-[#14181A] placeholder-[#4B5250]/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] transition-colors"
+            className="w-full bg-[#FFFFFF] border border-[#DEDAD1] rounded pl-9 pr-3 py-1.5 text-xs text-[#14181A] placeholder-[#4B5250]/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] transition-colors"
           />
         </div>
 
@@ -211,7 +211,7 @@ export default function DiscoverView({
               aria-label="Filter by breed"
               value={breedFilter}
               onChange={(e) => handleBreedChange(e.target.value)}
-              className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] rounded pl-3 pr-7 py-1.5 text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer transition-colors"
+              className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] rounded pl-3 pr-7 py-1.5 text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] cursor-pointer transition-colors"
             >
               <option value="All">All breeds</option>
               {filteredBreeds.map((b) => (
@@ -230,7 +230,7 @@ export default function DiscoverView({
               aria-label="Filter by size"
               value={sizeFilter}
               onChange={(e) => handleSizeChange(e.target.value)}
-              className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] rounded pl-3 pr-7 py-1.5 text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer transition-colors"
+              className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] rounded pl-3 pr-7 py-1.5 text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] cursor-pointer transition-colors"
             >
               <option value="All">All sizes</option>
               <option value="Small">Small</option>
@@ -248,7 +248,7 @@ export default function DiscoverView({
               aria-label="Filter by distance"
               value={distanceFilter}
               onChange={(e) => handleDistanceChange(e.target.value)}
-              className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] rounded pl-3 pr-7 py-1.5 text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer transition-colors"
+              className="appearance-none text-xs font-medium bg-[#FFFFFF] hover:bg-[#F3F1EA] border border-[#DEDAD1] rounded pl-3 pr-7 py-1.5 text-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] cursor-pointer transition-colors"
             >
               <option value="all">All locations</option>
               <option value="nearby">Nearby (within 50 km)</option>

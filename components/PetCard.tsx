@@ -38,7 +38,7 @@ export default function PetCard({
       <button 
         type="button"
         aria-label={`View record for ${pet.pet_name}`}
-        className="relative aspect-[4/5] w-full overflow-hidden text-left bg-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] cursor-pointer"
+        className="relative aspect-[4/5] w-full overflow-hidden text-left bg-[#14181A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] cursor-pointer"
         onClick={() => onSelect(pet)}
       >
         <img
@@ -56,7 +56,7 @@ export default function PetCard({
 
         {/* Circular Verified Check Mark Top Right */}
         <div 
-          className="absolute top-3 right-3 w-6 h-6 rounded-full bg-[#3E6259] text-white flex items-center justify-center shadow-xs"
+          className="absolute top-3 right-3 w-6 h-6 rounded-full bg-[#FBBF24] text-[#14181A] flex items-center justify-center shadow-xs"
           title="Verified Shelter Record"
           aria-label="Verified record"
         >
@@ -72,7 +72,7 @@ export default function PetCard({
             <button 
               type="button"
               onClick={() => onSelect(pet)}
-              className="text-left font-serif text-2xl font-medium text-[#14181A] hover:text-[#3E6259] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259] transition-colors cursor-pointer"
+              className="text-left font-serif text-2xl font-medium text-[#14181A] hover:text-[#B45309] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24] transition-colors cursor-pointer"
             >
               {pet.pet_name}
             </button>
@@ -88,7 +88,7 @@ export default function PetCard({
 
           {/* Italic Behavioral Pull-Quote in Fraunces */}
           {pet.behaviour_desc && (
-            <p className="font-serif italic text-xs text-[#14181A] border-l-2 border-[#3E6259] pl-3 py-0.5 my-2 leading-relaxed">
+            <p className="font-serif italic text-xs text-[#14181A] border-l-2 border-[#FBBF24] pl-3 py-0.5 my-2 leading-relaxed">
               "{pet.behaviour_desc}"
             </p>
           )}
@@ -108,7 +108,7 @@ export default function PetCard({
           <button
             type="button"
             onClick={() => onSelect(pet)}
-            className="group/btn text-xs font-semibold text-[#3E6259] hover:text-[#2E4A43] flex items-center gap-1 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6259]"
+            className="group/btn text-xs font-semibold text-[#B45309] hover:text-[#92400E] flex items-center gap-1 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBF24]"
           >
             <span>View record</span>
             <ArrowRight className="w-3.5 h-3.5 transform transition-transform duration-150 ease-out group-hover/btn:translate-x-[3px]" />
@@ -118,7 +118,7 @@ export default function PetCard({
             <button
               type="button"
               onClick={() => onSwipeRight(pet.pet_id)}
-              className="text-xs px-3 py-1 bg-[#3E6259] hover:bg-[#2E4A43] text-white font-medium rounded transition-colors cursor-pointer"
+              className="text-xs px-3 py-1 bg-[#FBBF24] hover:bg-[#F59E0B] text-[#14181A] font-medium rounded transition-colors cursor-pointer"
             >
               Express interest
             </button>
