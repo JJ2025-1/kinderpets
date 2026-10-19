@@ -10,11 +10,11 @@ The database implements the **12 logical entities** established in the DA1 desig
 
 | File | Purpose | Description |
 |---|---|---|
-| [`01_schema.sql`](file:///Users/jjeevan/kinderpets/database/01_schema.sql) | Table Definitions (DDL) | Re-runnable schema creating all 12 DA1 tables, primary keys, foreign keys, unique constraints, check constraints, identity sequences, and performance B-Tree indexes. |
-| [`02_seed_data.sql`](file:///Users/jjeevan/kinderpets/database/02_seed_data.sql) | Realistic Initial Dataset | Seed data across 5 Indian Shelters (prominent Bangalore focus), 6 Staff, 10 Breeds, 16 Pets, 20 Photos, 6 Adopters, Preferences, Preferred Breeds, Swipes, Matches, Applications, and Decisions. |
-| [`03_queries.sql`](file:///Users/jjeevan/kinderpets/database/03_queries.sql) | 18 Academic Demonstration Queries | Comprehensive SQL queries covering available pets, metro/area discovery, multi-table JOINs, GROUP BY, HAVING, correlated subqueries, NOT EXISTS, and summary aggregations. |
-| [`04_plsql.sql`](file:///Users/jjeevan/kinderpets/database/04_plsql.sql) | PL/SQL Procedures & Functions | Business procedures (`add_pet`, `create_match`, `record_swipe`, `submit_adoption_application`, `approve_adoption`, `reject_adoption`) with strict shelter governance rules and user-defined functions. |
-| [`05_test.sql`](file:///Users/jjeevan/kinderpets/database/05_test.sql) | End-to-End Test & Verification Suite | Automated test script verifying table counts, SELECT queries, full adoption lifecycle, governance security authorization failure (ORA-20020), rejection lifecycle, and final state audits. |
+| [`01_schema.sql`](01_schema.sql) | Table Definitions (DDL) | Re-runnable schema creating all 12 DA1 tables, primary keys, foreign keys, unique constraints, check constraints, identity sequences, and performance B-Tree indexes. |
+| [`02_seed_data.sql`](02_seed_data.sql) | Realistic Initial Dataset | Seed data across 5 Indian Shelters (prominent Bangalore focus), 6 Staff, 10 Breeds, 16 Pets, 20 Photos, 6 Adopters, Preferences, Preferred Breeds, Swipes, Matches, Applications, and Decisions. |
+| [`03_queries.sql`](03_queries.sql) | 18 Academic Demonstration Queries | Comprehensive SQL queries covering available pets, metro/area discovery, multi-table JOINs, GROUP BY, HAVING, correlated subqueries, NOT EXISTS, and summary aggregations. |
+| [`04_plsql.sql`](04_plsql.sql) | PL/SQL Procedures & Functions | Business procedures (`add_pet`, `create_match`, `record_swipe`, `submit_adoption_application`, `approve_adoption`, `reject_adoption`) with strict shelter governance rules and user-defined functions. |
+| [`05_test.sql`](05_test.sql) | End-to-End Test & Verification Suite | Automated test script verifying table counts, SELECT queries, full adoption lifecycle, governance security authorization failure (ORA-20020), rejection lifecycle, and final state audits. |
 
 ---
 
