@@ -28,10 +28,10 @@ For DA3, **Graph Database (Neo4j)** was selected over Column-Family, Vector, and
 
 | File | Type | Description |
 |---|---|---|
-| [`01_schema.cypher`](file:///Users/jjeevan/kinderpets/database/neo4j/01_schema.cypher) | DDL / Constraints | Uniqueness constraints, property existence constraints, and traversal B-Tree indexes across all node labels. |
-| [`02_seed_data.cypher`](file:///Users/jjeevan/kinderpets/database/neo4j/02_seed_data.cypher) | DML / Seed Data | Creates 5 Shelters, 6 Staff, 2 Species, 10 Breeds, 16 Pets, 6 Adopters, Preferences, Swipes, Matches, Applications, and Decisions. |
-| [`03_queries.cypher`](file:///Users/jjeevan/kinderpets/database/neo4j/03_queries.cypher) | 12 Academic Queries | Demonstrates multi-hop path traversal, collaborative filtering, Jaccard similarity, in-degree centrality, shortest paths, and aggregations. |
-| [`04_graph_algorithms.cypher`](file:///Users/jjeevan/kinderpets/database/neo4j/04_graph_algorithms.cypher) | Graph Data Science | Algorithmic Cypher procedures for Node Similarity, Degree Centrality, and Community Detection. |
+| [`01_schema.cypher`](01_schema.cypher) | DDL / Constraints | Uniqueness constraints, property existence constraints, and traversal B-Tree indexes across all node labels. |
+| [`02_seed_data.cypher`](02_seed_data.cypher) | DML / Seed Data | Creates 5 Shelters, 6 Staff, 2 Species, 10 Breeds, 16 Pets, 6 Adopters, Preferences, Swipes, Matches, Applications, and Decisions. |
+| [`03_queries.cypher`](03_queries.cypher) | 12 Academic Queries | Demonstrates multi-hop path traversal, collaborative filtering, Jaccard similarity, in-degree centrality, shortest paths, and aggregations. |
+| [`04_graph_algorithms.cypher`](04_graph_algorithms.cypher) | Graph Data Science | Algorithmic Cypher procedures for Node Similarity, Degree Centrality, and Community Detection. |
 
 ---
 

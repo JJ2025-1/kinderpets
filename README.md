@@ -100,9 +100,9 @@ graph TD
 
 The repository includes complete, production-grade Oracle SQL and PL/SQL scripts in `database/`:
 
-- **[`database/01_schema.sql`](file:///Users/jjeevan/kinderpets/database/01_schema.sql)**: Safely re-runnable DDL creating all 12 DA1 tables, primary keys, foreign keys, unique constraints, check constraints, identity sequences, and performance B-Tree indexes. (Physical table `PET_MATCH` represents the DA1 `MATCH` entity to avoid the Oracle reserved keyword).
-- **[`database/02_seed_data.sql`](file:///Users/jjeevan/kinderpets/database/02_seed_data.sql)**: Comprehensive realistic seed dataset covering 5 Indian Shelters (prominent Bangalore presence), 6 Staff, 10 Breeds, 16 Pets, 20 Photos, 6 Adopters, Preferences, Preferred Breeds, Swipes, Matches, Applications, and Decisions.
-- **[`database/03_queries.sql`](file:///Users/jjeevan/kinderpets/database/03_queries.sql)**: 18 academic demonstration queries exercising:
+- **[`database/01_schema.sql`](database/01_schema.sql)**: Safely re-runnable DDL creating all 12 DA1 tables, primary keys, foreign keys, unique constraints, check constraints, identity sequences, and performance B-Tree indexes. (Physical table `PET_MATCH` represents the DA1 `MATCH` entity to avoid the Oracle reserved keyword).
+- **[`database/02_seed_data.sql`](database/02_seed_data.sql)**: Comprehensive realistic seed dataset covering 5 Indian Shelters (prominent Bangalore presence), 6 Staff, 10 Breeds, 16 Pets, 20 Photos, 6 Adopters, Preferences, Preferred Breeds, Swipes, Matches, Applications, and Decisions.
+- **[`database/03_queries.sql`](database/03_queries.sql)**: 18 academic demonstration queries exercising:
   1. All available pets
   2. Pets by city (Bangalore)
   3. Pets by species (Dogs)
@@ -121,7 +121,7 @@ The repository includes complete, production-grade Oracle SQL and PL/SQL scripts
   16. Registered adopters without applications (correlated `NOT EXISTS`)
   17. Automated preference matching subquery
   18. System summary operational dashboard (Aggregations + CASE)
-- **[`database/04_plsql.sql`](file:///Users/jjeevan/kinderpets/database/04_plsql.sql)**: PL/SQL procedures and functions:
+- **[`database/04_plsql.sql`](database/04_plsql.sql)**: PL/SQL procedures and functions:
   - `add_pet`: Registers new pets with referential integrity validation.
   - `create_match`: Deterministically creates or retrieves mutual affinity records.
   - `record_swipe`: Upserts swipe history and triggers match generation.
@@ -131,7 +131,7 @@ The repository includes complete, production-grade Oracle SQL and PL/SQL scripts
   - `get_available_pet_count`: Function calculating real-time inventory.
   - `get_adopter_match_count`: Function returning active matches.
   - `is_pet_suitable_for_adopter`: Function scoring adopter preference suitability.
-- **[`database/05_test.sql`](file:///Users/jjeevan/kinderpets/database/05_test.sql)**: Complete test suite covering table counts, SELECT queries, full adoption lifecycle, governance authorization failure test, rejection scenario, and final audit trails.
+- **[`database/05_test.sql`](database/05_test.sql)**: Complete test suite covering table counts, SELECT queries, full adoption lifecycle, governance authorization failure test, rejection scenario, and final audit trails.
 
 ---
 
