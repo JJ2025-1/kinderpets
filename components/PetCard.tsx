@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { EnrichedPet } from '@/lib/types';
-import { Check, ArrowRight, Building2, MapPin } from 'lucide-react';
+import { Check, ArrowRight, Building2, MapPin, Sparkles } from 'lucide-react';
 
 interface PetCardProps {
   pet: EnrichedPet;
@@ -48,10 +48,18 @@ export default function PetCard({
           loading="lazy"
         />
 
-        {/* Distance Badge Top Left (Rounded, Translucent Dark) */}
-        <div className="absolute top-3 left-3 bg-[#14181A]/80 backdrop-blur-xs text-[#F3F1EA] px-2.5 py-1 rounded-full text-[11px] font-medium flex items-center gap-1">
-          <MapPin className="w-3 h-3 text-[#DEDAD1]" />
-          <span>{pet.approx_distance_km} km</span>
+        {/* Distance & Graph Badge Top Left */}
+        <div className="absolute top-3 left-3 flex flex-col gap-1 items-start">
+          <div className="bg-[#14181A]/80 backdrop-blur-xs text-[#F3F1EA] px-2.5 py-1 rounded-full text-[11px] font-medium flex items-center gap-1">
+            <MapPin className="w-3 h-3 text-[#DEDAD1]" />
+            <span>{pet.approx_distance_km} km</span>
+          </div>
+          {pet.graphRecommendation && (
+            <div className="bg-[#B45309]/95 backdrop-blur-xs text-[#FEF3C7] px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 shadow-xs border border-[#FDE68A]/30">
+              <Sparkles className="w-2.5 h-2.5 text-[#FDE68A]" />
+              <span>{pet.graphRecommendation.matchScore}% Graph Affinity</span>
+            </div>
+          )}
         </div>
 
         {/* Circular Verified Check Mark Top Right */}
@@ -91,6 +99,24 @@ export default function PetCard({
             <p className="font-serif italic text-xs text-[#14181A] border-l-2 border-[#FBBF24] pl-3 py-0.5 my-2 leading-relaxed">
               "{pet.behaviour_desc}"
             </p>
+          )}
+
+          {/* Graph Recommendation Reasoning Callout */}
+          {pet.graphRecommendation && (
+            <div className="p-2.5 bg-[#FEF9C3] border border-[#FDE68A] rounded-xs text-[11px] space-y-1 my-2">
+              <div className="flex items-center space-x-1 text-[#92400E] font-semibold">
+                <Sparkles className="w-3 h-3 text-[#B45309]" />
+                <span>Graph Recommendation:</span>
+              </div>
+              <p className="text-[#78350F] leading-tight">
+                {pet.graphRecommendation.reason}
+              </p>
+              {pet.graphRecommendation.graphTraversalPath && (
+                <div className="text-[10px] font-mono text-[#B45309] pt-1 truncate">
+                  Path: {pet.graphRecommendation.graphTraversalPath.join(' ➔ ')}
+                </div>
+              )}
+            </div>
           )}
 
           {/* Shelter Credentials */}

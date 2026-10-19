@@ -35,14 +35,15 @@ export async function getOraclePool(): Promise<oracledb.Pool> {
         user,
         password,
         connectString,
-        poolMin: 1,
+        poolMin: 0,
         poolMax: 10,
         poolIncrement: 1,
-        poolTimeout: 60,
+        poolTimeout: 10,
       });
       console.log(`[Oracle] Connected to pool: ${user}@${connectString}`);
     } catch (err: any) {
       console.error('[Oracle] Failed to create connection pool:', err);
+      global.__oracle_pool = undefined;
       throw err;
     }
   }
@@ -54,7 +55,20 @@ export async function withConnection<T>(
   callback: (conn: oracledb.Connection) => Promise<T>
 ): Promise<T> {
   const pool = await getOraclePool();
-  const conn = await pool.getConnection();
+  let conn: oracledb.Connection;
+  try {
+    conn = await pool.getConnection();
+  } catch (connErr: any) {
+    // If getting a connection fails (e.g. host unreachable), tear down the pool so it doesn't linger
+    try {
+      await pool.close(10);
+    } catch {
+      // ignore close errors on dead pool
+    }
+    global.__oracle_pool = undefined;
+    throw cleanOracleError(connErr);
+  }
+
   try {
     return await callback(conn);
   } catch (err: any) {

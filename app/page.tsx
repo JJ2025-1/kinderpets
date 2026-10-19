@@ -7,6 +7,7 @@ import MatchesView from '@/components/MatchesView';
 import ApplicationsView from '@/components/ApplicationsView';
 import ShelterDashboard from '@/components/ShelterDashboard';
 import SqlLab from '@/components/SqlLab';
+import GraphLab from '@/components/GraphLab';
 import PetDetailModal from '@/components/PetDetailModal';
 import MatchCelebrationModal from '@/components/MatchCelebrationModal';
 import ApplicationModal from '@/components/ApplicationModal';
@@ -22,7 +23,7 @@ import {
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState<
-    'discover' | 'matches' | 'applications' | 'shelter' | 'sqllab'
+    'discover' | 'matches' | 'applications' | 'shelter' | 'sqllab' | 'graphlab'
   >('discover');
 
   // User switcher state
@@ -304,6 +305,7 @@ export default function HomePage() {
         )}
 
         {activeTab === 'sqllab' && <SqlLab />}
+        {activeTab === 'graphlab' && <GraphLab />}
       </main>
 
       {/* Footer */}
@@ -315,7 +317,7 @@ export default function HomePage() {
             <span>Verified shelter records & adoption management</span>
           </div>
           <p className="text-[11px] text-[#4B5250]">
-            12 Normalized tables (3NF) • Dual Engine: Oracle SQL / PL/SQL & Relational Backend
+            12 Normalized tables (3NF) • Neo4j Property Graph (DA3) • Dual Engine Architecture
           </p>
         </div>
       </footer>

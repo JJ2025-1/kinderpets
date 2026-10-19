@@ -12,10 +12,10 @@ interface NavbarProps {
   currentRole: 'adopter' | 'staff';
   currentAdopterId: number;
   currentStaffId: number;
-  activeTab: 'discover' | 'matches' | 'applications' | 'shelter' | 'sqllab';
+  activeTab: 'discover' | 'matches' | 'applications' | 'shelter' | 'sqllab' | 'graphlab';
   matchCount: number;
   pendingAppCount: number;
-  onSelectTab: (tab: 'discover' | 'matches' | 'applications' | 'shelter' | 'sqllab') => void;
+  onSelectTab: (tab: 'discover' | 'matches' | 'applications' | 'shelter' | 'sqllab' | 'graphlab') => void;
   onSwitchUser: (role: 'adopter' | 'staff', id: number) => void;
   onResetDb: () => void;
 }
@@ -31,12 +31,13 @@ export default function Navbar({
   onSwitchUser,
   onResetDb,
 }: NavbarProps) {
-  const navItems: { id: 'discover' | 'matches' | 'applications' | 'shelter' | 'sqllab'; label: string; count?: number }[] = [
+  const navItems: { id: 'discover' | 'matches' | 'applications' | 'shelter' | 'sqllab' | 'graphlab'; label: string; count?: number }[] = [
     { id: 'discover', label: 'Discover' },
     { id: 'matches', label: 'Matches', count: matchCount },
     { id: 'applications', label: 'Applications' },
     { id: 'shelter', label: 'Shelter console', count: pendingAppCount },
     { id: 'sqllab', label: 'Relational schema' },
+    { id: 'graphlab', label: 'Graph network (Neo4j)' },
   ];
 
   return (

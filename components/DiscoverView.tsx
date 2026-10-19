@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { EnrichedPet, Breed, Adopter } from '@/lib/types';
 import PetCard from '@/components/PetCard';
 import SwipeDeck from '@/components/SwipeDeck';
@@ -9,7 +9,9 @@ import {
   ChevronDown, 
   Layers, 
   LayoutGrid, 
-  SearchX
+  SearchX,
+  Sparkles,
+  Network
 } from 'lucide-react';
 
 interface DiscoverViewProps {
@@ -41,11 +43,32 @@ export default function DiscoverView({
   onResetSwipes,
 }: DiscoverViewProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'deck'>('grid');
+  const [engineMode, setEngineMode] = useState<'relational' | 'graph'>('relational');
+  const [graphRecs, setGraphRecs] = useState<any[]>([]);
+  const [loadingGraph, setLoadingGraph] = useState(false);
   const [speciesFilter, setSpeciesFilter] = useState('All');
   const [breedFilter, setBreedFilter] = useState('All');
   const [sizeFilter, setSizeFilter] = useState('All');
   const [distanceFilter, setDistanceFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Fetch graph recommendations when adopter changes
+  useEffect(() => {
+    const fetchGraphRecs = async () => {
+      if (!currentAdopter) return;
+      setLoadingGraph(true);
+      try {
+        const res = await fetch(`/api/graph/recommendations?adopterId=${currentAdopter.adopter_id}`);
+        const data = await res.json();
+        setGraphRecs(data.recommendations || []);
+      } catch (err) {
+        console.error('Failed to load graph recommendations:', err);
+      } finally {
+        setLoadingGraph(false);
+      }
+    };
+    fetchGraphRecs();
+  }, [currentAdopter?.adopter_id]);
 
   const filteredBreeds = allBreeds.filter((b) =>
     speciesFilter === 'All' ? true : b.species === speciesFilter
@@ -92,7 +115,37 @@ export default function DiscoverView({
     });
   };
 
-  const displayedPets = pets.filter((p) => {
+  // When engineMode === 'graph', rank and enrich pets with collaborative filtering graph scores
+  const processedPets = useMemo(() => {
+    if (engineMode === 'graph' && graphRecs.length > 0) {
+      const recMap = new Map(graphRecs.map((r) => [r.petId, r]));
+
+      const enriched = pets.map((p) => {
+        const rec = recMap.get(p.pet_id);
+        if (rec) {
+          return {
+            ...p,
+            graphRecommendation: {
+              matchScore: rec.matchScore,
+              reason: rec.reason,
+              graphTraversalPath: rec.graphTraversalPath,
+            },
+          };
+        }
+        return p;
+      });
+
+      return [...enriched].sort((a, b) => {
+        const scoreA = a.graphRecommendation?.matchScore ?? 0;
+        const scoreB = b.graphRecommendation?.matchScore ?? 0;
+        return scoreB - scoreA;
+      });
+    }
+
+    return pets;
+  }, [pets, engineMode, graphRecs]);
+
+  const displayedPets = processedPets.filter((p) => {
     if (!searchQuery.trim()) return true;
     const query = searchQuery.toLowerCase();
     return (
@@ -166,6 +219,70 @@ export default function DiscoverView({
           </div>
         </div>
       </section>
+
+      {/* Engine Switcher Bar & Graph Status */}
+      <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#FFFFFF] border border-[#DEDAD1] p-3 rounded-sm">
+        <div className="flex items-center space-x-2">
+          <span className="text-xs font-semibold text-[#14181A]">Discovery Engine:</span>
+          <div className="flex items-center space-x-1 p-0.5 bg-[#F3F1EA] border border-[#DEDAD1] rounded">
+            <button
+              type="button"
+              onClick={() => setEngineMode('relational')}
+              className={`px-3 py-1 text-xs font-semibold rounded transition-all cursor-pointer ${
+                engineMode === 'relational'
+                  ? 'bg-[#FFFFFF] text-[#14181A] shadow-xs'
+                  : 'text-[#4B5250] hover:text-[#14181A]'
+              }`}
+            >
+              Relational SQL
+            </button>
+            <button
+              type="button"
+              onClick={() => setEngineMode('graph')}
+              className={`px-3 py-1 text-xs font-semibold rounded transition-all flex items-center space-x-1.5 cursor-pointer ${
+                engineMode === 'graph'
+                  ? 'bg-[#FBBF24] text-[#14181A] shadow-xs'
+                  : 'text-[#4B5250] hover:text-[#14181A]'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#B45309]" />
+              <span>Neo4j Graph Engine</span>
+            </button>
+          </div>
+        </div>
+
+        {engineMode === 'graph' ? (
+          <div className="flex items-center space-x-1.5 text-xs text-[#92400E]">
+            <span className="w-2 h-2 rounded-full bg-[#16A34A] animate-pulse" />
+            <span className="font-semibold">Collaborative Filtering Active</span>
+            <span className="text-[#4B5250] text-[11px] hidden md:inline">• Bipartite Walk</span>
+          </div>
+        ) : (
+          <div className="text-xs text-[#4B5250]">
+            Standard 3NF relational query filtering
+          </div>
+        )}
+      </section>
+
+      {/* Graph Engine Callout Banner when Active */}
+      {engineMode === 'graph' && (
+        <div className="bg-[#FEF9C3] border-l-4 border-l-[#F59E0B] p-4 rounded-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-start space-x-3">
+            <Sparkles className="w-5 h-5 text-[#B45309] shrink-0 mt-0.5" />
+            <div className="space-y-0.5">
+              <span className="text-xs font-bold text-[#92400E]">
+                Personalized Graph Affinity Rankings for {currentAdopter?.full_name || 'Rahul Sharma'}
+              </span>
+              <p className="text-xs text-[#78350F] leading-relaxed">
+                Pets sorted by graph path recommendations using mutual swiped-right projections: (Adopter) ➔ [:SWIPED_RIGHT] ➔ (Shared) ➔ (Peer) ➔ [:SWIPED_RIGHT] ➔ (Rec).
+              </p>
+            </div>
+          </div>
+          <span className="text-[11px] font-mono px-2 py-0.5 bg-[#FEF3C7] border border-[#FDE68A] text-[#92400E] font-semibold rounded shrink-0 self-start sm:self-center">
+            DA3 Recommendation Engine
+          </span>
+        </div>
+      )}
 
       {/* Filter Row (Bordered Rectangles with 4px Radius) */}
       <section 
