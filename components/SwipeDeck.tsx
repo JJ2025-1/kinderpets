@@ -317,6 +317,24 @@ export default function SwipeDeck({
               </p>
             )}
 
+            {/* Graph Recommendation Badge & Path */}
+            {currentPet.graphRecommendation && (
+              <div className="mb-3 p-2.5 bg-[#14181A]/90 border border-[#FBBF24]/60 backdrop-blur-md rounded-xs text-[11px] text-[#FEF3C7] space-y-1">
+                <div className="flex items-center space-x-1.5 font-bold text-[#FBBF24]">
+                  <Sparkles className="w-3.5 h-3.5 text-[#FBBF24]" />
+                  <span>{currentPet.graphRecommendation.matchScore}% Match via Graph Traversal</span>
+                </div>
+                <p className="text-[11px] text-[#F3F1EA] leading-tight line-clamp-2">
+                  {currentPet.graphRecommendation.reason}
+                </p>
+                {currentPet.graphRecommendation.graphTraversalPath && (
+                  <div className="text-[10px] font-mono text-[#FBBF24] pt-0.5 truncate">
+                    Path: {currentPet.graphRecommendation.graphTraversalPath.join(' ➔ ')}
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Shelter Facility */}
             <div className="text-xs text-[#DEDAD1]/80 flex items-center justify-between border-t border-white/10 pt-2.5">
               <div className="flex items-center space-x-1.5 truncate">

@@ -126,6 +126,11 @@ export interface EnrichedPet extends Pet {
   photos: PetPhoto[];
   primary_photo: string;
   approx_distance_km: number;
+  graphRecommendation?: {
+    matchScore: number;
+    reason: string;
+    graphTraversalPath?: string[];
+  };
 }
 
 export interface EnrichedMatch extends Match {

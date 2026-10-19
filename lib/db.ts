@@ -25,7 +25,30 @@ import type {
   EnrichedApplication,
 } from './types';
 
+let oracleDisabled = false;
+
+function handleOracleError(method: string, err: any): void {
+  const errMsg = err?.message || String(err);
+  if (
+    !oracleDisabled &&
+    (errMsg.includes('connection') ||
+      errMsg.includes('ECONNREFUSED') ||
+      errMsg.includes('NJS-') ||
+      errMsg.includes('ORA-12') ||
+      errMsg.includes('ETIMEDOUT') ||
+      errMsg.includes('timeout'))
+  ) {
+    oracleDisabled = true;
+    console.warn(
+      `[DB] Oracle offline (${errMsg.slice(0, 80)}). Automatically switched to embedded SQLite mode.`
+    );
+  } else if (!oracleDisabled) {
+    console.warn(`[DB] Oracle ${method} fallback to SQLite:`, errMsg.slice(0, 80));
+  }
+}
+
 function shouldUseOracle(): boolean {
+  if (oracleDisabled) return false;
   return Boolean(process.env.ORACLE_PASSWORD);
 }
 
@@ -140,7 +163,7 @@ export const dbService = {
         await conn.commit();
       });
     } catch (err) {
-      console.warn('[DB] Oracle reset failed, falling back to SQLite:', err);
+      handleOracleError('resetDatabase', err);
       sqliteService.resetDatabase();
     }
   },
@@ -158,7 +181,7 @@ export const dbService = {
         return toLowerKeys<Shelter[]>(result.rows || []);
       });
     } catch (err) {
-      console.warn('[DB] Oracle getShelters fallback to SQLite');
+      handleOracleError('getShelters', err);
       return sqliteService.getShelters();
     }
   },
@@ -183,7 +206,7 @@ export const dbService = {
         return toLowerKeys<ShelterStaff[]>(result.rows || []);
       });
     } catch (err) {
-      console.warn('[DB] Oracle getStaff fallback to SQLite');
+      handleOracleError('getStaff', err);
       return sqliteService.getStaff(shelterId);
     }
   },
@@ -201,7 +224,7 @@ export const dbService = {
         return toLowerKeys<Breed[]>(result.rows || []);
       });
     } catch (err) {
-      console.warn('[DB] Oracle getBreeds fallback to SQLite');
+      handleOracleError('getBreeds', err);
       return sqliteService.getBreeds();
     }
   },
@@ -219,7 +242,7 @@ export const dbService = {
         return toLowerKeys<Adopter[]>(result.rows || []);
       });
     } catch (err) {
-      console.warn('[DB] Oracle getAdopters fallback to SQLite');
+      handleOracleError('getAdopters', err);
       return sqliteService.getAdopters();
     }
   },
@@ -238,7 +261,7 @@ export const dbService = {
         return toLowerKeys<Adopter>(result.rows[0]);
       });
     } catch (err) {
-      console.warn('[DB] Oracle getAdopter fallback to SQLite');
+      handleOracleError('getAdopter', err);
       return sqliteService.getAdopter(adopterId);
     }
   },
@@ -272,7 +295,7 @@ export const dbService = {
         };
       });
     } catch (err) {
-      console.warn('[DB] Oracle getAdopterPreferences fallback to SQLite');
+      handleOracleError('getAdopterPreferences', err);
       return sqliteService.getAdopterPreferences(adopterId);
     }
   },
@@ -329,7 +352,7 @@ export const dbService = {
         await conn.commit();
       });
     } catch (err) {
-      console.warn('[DB] Oracle updateAdopterPreferences fallback to SQLite');
+      handleOracleError('updateAdopterPreferences', err);
       sqliteService.updateAdopterPreferences(adopterId, preferredSpecies, minAgeMonths, maxAgeMonths, preferredSize, preferredBreeds);
     }
   },
@@ -451,7 +474,7 @@ export const dbService = {
         return enriched;
       });
     } catch (err) {
-      console.warn('[DB] Oracle getDiscoverPets fallback to SQLite');
+      handleOracleError('getDiscoverPets', err);
       return sqliteService.getDiscoverPets(options);
     }
   },
@@ -509,7 +532,7 @@ export const dbService = {
         };
       });
     } catch (err) {
-      console.warn('[DB] Oracle getPet fallback to SQLite');
+      handleOracleError('getPet', err);
       return sqliteService.getPet(petId);
     }
   },
@@ -579,7 +602,7 @@ export const dbService = {
         return petId;
       });
     } catch (err) {
-      console.warn('[DB] Oracle addPet fallback to SQLite');
+      handleOracleError('addPet', err);
       return sqliteService.addPet(petData);
     }
   },
@@ -601,7 +624,7 @@ export const dbService = {
         );
       });
     } catch (err) {
-      console.warn('[DB] Oracle updatePetStatus fallback to SQLite');
+      handleOracleError('updatePetStatus', err);
       sqliteService.updatePetStatus(petId, status);
     }
   },
@@ -639,7 +662,7 @@ export const dbService = {
         return { isMatch, matchId };
       });
     } catch (err) {
-      console.warn('[DB] Oracle recordSwipe fallback to SQLite');
+      handleOracleError('recordSwipe', err);
       return sqliteService.recordSwipe(adopterId, petId, direction);
     }
   },
@@ -708,7 +731,7 @@ export const dbService = {
         return matches;
       });
     } catch (err) {
-      console.warn('[DB] Oracle getAdopterMatches fallback to SQLite');
+      handleOracleError('getAdopterMatches', err);
       return sqliteService.getAdopterMatches(adopterId);
     }
   },
@@ -737,7 +760,7 @@ export const dbService = {
         return (result.outBinds as any).appId;
       });
     } catch (err) {
-      console.warn('[DB] Oracle submitAdoptionApplication fallback to SQLite');
+      handleOracleError('submitAdoptionApplication', err);
       return sqliteService.submitAdoptionApplication(matchId, homeVisitDate);
     }
   },
@@ -815,7 +838,7 @@ export const dbService = {
         return applications;
       });
     } catch (err) {
-      console.warn('[DB] Oracle getApplications fallback to SQLite');
+      handleOracleError('getApplications', err);
       return sqliteService.getApplications(shelterId);
     }
   },
@@ -844,7 +867,7 @@ export const dbService = {
         return (result.outBinds as any).decisionId;
       });
     } catch (err) {
-      console.warn('[DB] Oracle approveAdoption fallback to SQLite');
+      handleOracleError('approveAdoption', err);
       return sqliteService.approveAdoption(applicationId, staffId);
     }
   },
@@ -873,7 +896,7 @@ export const dbService = {
         return (result.outBinds as any).decisionId;
       });
     } catch (err) {
-      console.warn('[DB] Oracle rejectAdoption fallback to SQLite');
+      handleOracleError('rejectAdoption', err);
       return sqliteService.rejectAdoption(applicationId, staffId);
     }
   },
@@ -937,7 +960,7 @@ export const dbService = {
         });
       });
     } catch (err) {
-      console.warn('[DB] Oracle getAllPetsForShelter fallback to SQLite');
+      handleOracleError('getAllPetsForShelter', err);
       return sqliteService.getAllPetsForShelter(shelterId);
     }
   },
@@ -1041,7 +1064,7 @@ export const dbService = {
         };
       });
     } catch (err) {
-      console.warn('[DB] Oracle runAcademicQuery fallback to SQLite');
+      handleOracleError('runAcademicQuery', err);
       return sqliteService.runAcademicQuery(queryId);
     }
   },
